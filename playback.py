@@ -1,7 +1,7 @@
 # Project Studio Group 3
 # username(s): jocekav
 # name(s): Jocelyn Kavanagh
-# version: 1
+# version: 2
 # description: Plays wave file when a user inputs a path. User has the ability to stop playback
 # sources: Adapted from PyAudio documentation found at https://people.csail.mit.edu/hubert/pyaudio/docs/
 
@@ -13,7 +13,7 @@ import wave
 pa = pyaudio.PyAudio()
 
 # prompt user to type path to wave file and store input
-txt = raw_input("Plays a wave file. Copy in the path to a wave file: ")
+txt = input("Plays a wave file. Copy in the path to a wave file: ")
 
 # open the wave file
 wf = wave.open(txt, 'rb')
@@ -36,11 +36,11 @@ stream.start_stream()
 # wait for stream to finish and prompt user to 
 while stream.is_active():
     # prompt user to stop playback at anytime
-    txt = raw_input("Type 'stop' to stop playback")
+    txt = input("Type 'stop' to stop playback")
     # stop stream if user enters stop
     if "stop" in txt:
         stream.stop_stream()
-        txt = raw_input("Type 'play' to resume playback ")
+        txt = input("Type 'play' to resume playback ")
         if "play" in txt:
             stream.start_stream()
     time.sleep(0.1)
