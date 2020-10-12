@@ -12,7 +12,7 @@ import pyaudio
 import callbackPlayback as player
 import time
 
-# create PyAudio context
+
 pa = pyaudio.PyAudio()
 
 txt = input("Plays a wave file. Copy in the path to a wave file: ")
@@ -20,7 +20,6 @@ txt = input("Plays a wave file. Copy in the path to a wave file: ")
 # [wf, stream, data] = player.initSong(txt, pa, 1024)
 [wf, stream] = player.initSong(txt, pa, 1024) 
 
-# stop stream if user enters stop
 while stream.is_active():
     txt = input("Type 'stop' to stop playback ")
     if "stop" in txt:

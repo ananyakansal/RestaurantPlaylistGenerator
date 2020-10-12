@@ -11,29 +11,24 @@ import numpy
 import math
 
 def initSong(file, source, block, fade = 200):
-    # open the wave file
     wf = wave.open(file, 'rb')
-    # open the stream using callback
     stream = source.open(format=source.get_format_from_width(wf.getsampwidth()),
                 channels=wf.getnchannels(),
                 rate=wf.getframerate(),
                 output=True)
-    if fade:
-        fadein = numpy.arange(0, 1.0, 1/fade)
-        fadeout = numpy.arange(1.0, 0, -1/fade)
-        data = stream.read()
-        wf[:fade] = numpy.multiply(wf[:fade], fadein)
-        wf[-fade:] = numpy.multiply(wf[-fade:], fadeout)
+#    if fade:
+#        fadein = numpy.arange(0, 1.0, 1/fade)
+#        fadeout = numpy.arange(1.0, 0, -1/fade)
+#        data = stream.read()
+#        wf[:fade] = numpy.multiply(wf[:fade], fadein)
+#        wf[-fade:] = numpy.multiply(wf[-fade:], fadeout)
 
     data = wf.readframes(block)
     return wf, stream, data
 
 def endSong(wavefile, stream):
-    # stop stream once it has ended
     stream.stop_stream()
-    # close stream
     stream.close()
-    # close wave file
     wavefile.close()
 
 def play(wavefile, stream, data, block):

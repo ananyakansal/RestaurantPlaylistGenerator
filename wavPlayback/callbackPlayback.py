@@ -24,7 +24,6 @@ def callback(in_data, frame_count, time_info, status):
     return (data, pyaudio.paContinue)
 
 def initSong(file, source, fade = 200):
-    # open the wave file
     wf = wave.open(file, 'rb')
     setFile(wf)
     # open the stream using callback
@@ -44,11 +43,8 @@ def initSong(file, source, fade = 200):
 
 
 def endSong(wavefile, stream):
-    # stop stream once it has ended
     stream.stop_stream()
-    # close stream
     stream.close()
-    # close wave file
     wavefile.close()
 
 def play(wavefile, stream):
