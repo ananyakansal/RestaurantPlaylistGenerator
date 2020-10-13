@@ -7,12 +7,13 @@ CLIENT_SECRET = ""
 PORT = "5000"
 CLIENT_URL = "http://127.0.0.1"
 REDIRECT_URI = "{}:{}/callback/".format(CLIENT_URL, PORT)
-SCOPE = "user-modify-playback-state user-read-recently-played streaming user-read-currently-playing user-read-playback-state"
+SCOPE = "user-modify-playback-state user-read-recently-played streaming user-read-currently-playing user-read-playback-state user-read-email user-read-private"
+global TOKEN_DATA
 TOKEN_DATA = []
 
 ##spotify parameters
 SPOTIFY_URL_AUTH = 'https://accounts.spotify.com/authorize/?'
-SPOTIFY_URL_TOKEN = 'https://accounts.spotify.com/api/token/'
+SPOTIFY_URL_TOKEN = 'https://accounts.spotify.com/api/token'
 RESPONSE_TYPE = 'code'   
 HEADER = 'application/x-www-form-urlencoded'
 REFRESH_TOKEN = ''
@@ -30,12 +31,12 @@ def getUserToken(authCode):
         "client_id": CLIENT_ID,
         "client_secret": CLIENT_SECRET,
     }
+
     postRequest = requests.post(SPOTIFY_URL_TOKEN, data=body)
     response = json.loads(postRequest.text)
-    authHeader = {"Authorization": "Bearer {}".format(response["access_token"])}
-    REFRESH_TOKEN = response["refresh_token"]
-    return [response["access_token"], authHeader, response["scope"], response["expires_in"]]
-
+    print(postRequest.text)
+    TOKEN_DATA = handleToken(response)
+    return TOKEN_DATA
 
 def refreshToken(time):
     time.sleep(time)
@@ -43,11 +44,16 @@ def refreshToken(time):
         "grant_type": "refresh_token",
         "refresh_token": REFRESH_TOKEN
     }
-    postRefresh = requests.post(SPOTIFY_URL_TOKEN, data=body, headers=HEADER)
-    response = json.dumps(postRefresh)
-    authHeader = {"Authorization": "Bearer {}".format(response["access_token"])}
+    postRefresh = requests.post(SPOTIFY_URL_TOKEN, data=body)
+    response = json.dumps(postRefresh.text)
+    TOKEN_DATA = handleToken(response)
+    return TOKEN_DATA
+
+def handleToken(response):
+    auth_head = {"Authorization": "Bearer {}".format(response["access_token"])}
     REFRESH_TOKEN = response["refresh_token"]
-    return [response["access_token"], authHeader, response["scope"], response["expires_in"]]
+    return [response["access_token"], auth_head, response["scope"], response["expires_in"]]
 
 def getAccessToken():
     return TOKEN_DATA
+

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request
 import spotifyAuthentication
+import json
 
 app = Flask(__name__)
 
@@ -9,8 +10,10 @@ def index():
 
 @app.route("/callback/")
 def callback():
-    spotifyAuthentication.getUserToken(request.args['code'])
-    return render_template('index.html')
+    userToken = spotifyAuthentication.getUserToken(request.args['code'])
+    token = {'userToken': userToken[0]}
+    return render_template('player.html', token=token)
 
+    
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
