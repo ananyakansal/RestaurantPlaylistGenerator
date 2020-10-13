@@ -3,10 +3,10 @@ import json
 
 ##server side
 CLIENT_ID = "cc02566bde9444cdb1aa1855f3fce9d1"
-CLIENT_SECRET = ""
+CLIENT_SECRET = "804d23b516b446be9d43cd11fd79496c"
 PORT = "5000"
 CLIENT_URL = "http://127.0.0.1"
-REDIRECT_URI = "{}:{}/callback/".format(CLIENT_URL, PORT)
+REDIRECT_URI = "{}:{}/player/".format(CLIENT_URL, PORT)
 SCOPE = "user-modify-playback-state user-read-recently-played streaming user-read-currently-playing user-read-playback-state user-read-email user-read-private"
 global TOKEN_DATA
 TOKEN_DATA = []
