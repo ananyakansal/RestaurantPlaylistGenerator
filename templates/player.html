@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Spotify Web Playback SDK Quick Start Tutorial</title>
+  <title>Spotify Player</title>
 </head>
 <body>
-  <h1>Spotify Web Playback SDK Quick Start Tutorial</h1>
-  <h2>Open your console log: <code>View > Developer > JavaScript Console</code></h2>
+  <h1>Spotify Web Playback</h1>
   <script src="https://sdk.scdn.co/spotify-player.js"></script>
   <script> window.onSpotifyWebPlaybackSDKReady = () => {
     // var token = "BQCCx9lpjrViiy5JiP7_pEwGsNAUOjAet9ADCdDN6cIYgFLYpJZiSuPuXzyvRKt9LteFgEQCRwpI2QlmdbPsTe4JrV6jYA8koZRYbYzBdVQTDyrTi9HiTXQXHMPGV3DIH7BKgVi1NpJ-rd-oTuILcMWcw4Cy2drBRqzDrZ7fuapXkDUIEVNIjdw";
     const accessToken = '{{token.userToken}}';
-    const player = new Spotify.Player({
-      name: 'Web Playback SDK Quick Start Player',
+    var player = new Spotify.Player({
+      name: 'Spotify Player',
       getOAuthToken: cb => { cb(accessToken); }
     });
 
@@ -27,6 +26,7 @@
     // Ready
     player.addListener('ready', ({ device_id }) => {
       console.log('Ready with Device ID', device_id);
+      var deviceID = device_id
     });
 
     // Not Ready
@@ -37,5 +37,48 @@
     // Connect to the player!
     player.connect();
   };</script>
+  
+</script>
+<p id="demo">A Paragraph</p>
+<!-- <a href='/play/'><input type=button value='value=”call_flask_funtion”></a> -->
+<!-- <button type="button" onclick="play()">Play</button> -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+        $(function() {
+          $('a#initPlayer').bind('click', function() {
+            $.getJSON('/initPlayer',
+                function(data) {
+              //do nothing
+            });
+        return false;
+      });
+    });
+
+    $(function() {
+          $('a#startPlayback').bind('click', function() {
+            $.getJSON('/startPlayback',
+                function(data) {
+              //do nothing
+            });
+        return false;
+      });
+    });
+    
+    $(function() {
+          $('a#pausePlayback').bind('click', function() {
+            $.getJSON('/pausePlayback',
+                function(data) {
+              //do nothing
+            });
+        return false;
+      });
+    });
+</script>
+<form>
+  <a href=# id=initPlayer><button class='btn btn-default'>Initialize Player</button></a>
+  <a href=# id=startPlayback><button class='btn btn-default'>Play</button></a>
+  <a href=# id=pausePlayback><button class='btn btn-default'>Pause</button></a>
+</form>
+
 </body>
 </html>
