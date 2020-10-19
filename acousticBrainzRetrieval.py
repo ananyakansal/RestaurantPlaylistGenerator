@@ -32,9 +32,10 @@ def getGenre(highLevelData):
     return highLevelData['highlevel']['genre_rosamerica']['all']
 
 def getMood(highLevelData):
-    mood_mirexDict = highLevelData['highlevel']['moods_mirex']['all']
-    mood_relaxedDict = highLevelData['highlevel']['mood_relaxed']['all']
-    return mood_mirexDict.update(mood_relaxedDict)
+    # mood_mirexDict = highLevelData['highlevel']['moods_mirex']['all']
+    # mood_relaxedDict = highLevelData['highlevel']['mood_relaxed']['all']
+    # return mood_mirexDict.update(mood_relaxedDict)
+    return highLevelData['highlevel']['moods_mirex']['all']
 
 def getTimbre(highLevelData):
     return highLevelData['highlevel']['timbre']['all']
@@ -73,7 +74,7 @@ def makeListFromCsv(filePath):
             song = makeSongDict(getHighLevelData(mbid), getLowLevelData(mbid))
             dictList.append(song)
     keys = dictList[0].keys()
-    with open('songData.csv', 'w', newline='')  as output_file:
+    with open('testSongData.csv', 'w', newline='')  as output_file:
         dict_writer = csv.DictWriter(output_file, keys)
         dict_writer.writeheader()
         dict_writer.writerows(dictList)
@@ -83,13 +84,14 @@ def makeCsv(filePath):
     df = pd.read_csv(filePath, header=0, sep='\t')
     mbids = df.recordingmbid.to_list()
     count = int(len(mbids)/25)
+    keys = ['title','artist','album','dance','genre','mood','timbre','instrumental','loudness','bpm']
     for i in range(count):
         songsDict = get25IDs(i, mbids)
         # dictList.append(songsDict)
-        keys = songsDict[0].keys()
-        with open('songData.csv', 'a', newline='')  as output_file:
+        # keys = songsDict[0].keys()
+        with open('testSongData.csv', 'a', newline='')  as output_file:
             dict_writer = csv.DictWriter(output_file, keys)
-            dict_writer.writeheader()
+            # dict_writer.writeheader()
             dict_writer.writerows(songsDict)
 
 def get25IDs(count, mbids):
@@ -110,5 +112,5 @@ def get25IDs(count, mbids):
             pass
     return dictList
 
-makeCsv('acousticbrainz-mediaeval-discogs-validation.tsv')
+makeCsv('test.tsv')
 
