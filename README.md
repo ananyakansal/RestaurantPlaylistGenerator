@@ -4,9 +4,10 @@
 - Python3
   - json
   - requests
+  - spotipy
   
 ## To run:
-Fill in CLIENT_SECRET field in spotifyAuthentication.py. 
+Fill in CLIENT_SECRET field in spotifyAuthentication.py and spotifyPlayback.py. 
 
 After installing python libraries, run app.py and access server link using Google Chrome.
 
