@@ -110,3 +110,5 @@ def get25IDs(count, mbids):
             pass
     return dictList
 
+makeCsv('acousticbrainz-mediaeval-discogs-validation.tsv')
+
