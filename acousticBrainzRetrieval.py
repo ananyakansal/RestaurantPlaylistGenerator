@@ -50,15 +50,34 @@ def getBpm(lowLevelData):
     return lowLevelData['rhythm']['bpm']
 
 def makeSongDict(highLevelData, lowLevelData):
+    dance = getDanceability(highLevelData)
+    genre = getGenre(highLevelData)
+    mood = getMood(highLevelData)
+    timbre = getTimbre(highLevelData)
+    instrumental = getInstrumental(highLevelData)
     song = {
         'title' : getTitle(highLevelData), 
         'artist' : getArtist(highLevelData), 
         'album' : getAlbum(highLevelData), 
-        'dance' : getDanceability(highLevelData), 
-        'genre' : getGenre(highLevelData), 
-        'mood' : getMood(highLevelData), 
-        'timbre' : getTimbre(highLevelData), 
-        'instrumental' : getInstrumental(highLevelData),
+        'danceable' : dance['danceable'],
+        'not_danceable' : dance['not_danceable'],
+        'genre_cla' : genre['cla'], 
+        'genre_dan' : genre['dan'], 
+        'genre_hip' : genre['hip'], 
+        'genre_jaz' : genre['jaz'], 
+        'genre_pop' : genre['pop'], 
+        'genre_rhy' : genre['rhy'], 
+        'genre_roc' : genre['roc'],
+        'genre_spe' : genre['spe'],
+        'mood_cluster1' : mood['Cluster1'], 
+        'mood_cluster2' : mood['Cluster2'],
+        'mood_cluster3' : mood['Cluster3'],
+        'mood_cluster4' : mood['Cluster4'],
+        'mood_cluster5' : mood['Cluster5'],
+        'timbre_bright' : timbre['bright'], 
+        'timbre_dark' : timbre['dark'],
+        'instrumental' : instrumental['instrumental'],
+        'voice' : instrumental['voice'],
         'loudness' : getLoudness(lowLevelData),
         'bpm' : getBpm(lowLevelData)
     }
@@ -84,7 +103,10 @@ def makeCsv(filePath):
     df = pd.read_csv(filePath, header=0, sep='\t')
     mbids = df.recordingmbid.to_list()
     count = int(len(mbids)/25)
-    keys = ['title','artist','album','dance','genre','mood','timbre','instrumental','loudness','bpm']
+    keys = ['title','artist','album','danceable', 'not_danceable', 'genre_cla', 
+            'genre_dan','genre_hip', 'genre_jaz', 'genre_pop', 'genre_rhy', 'genre_roc', 'genre_spe',
+            'mood_cluster1', 'mood_cluster2', 'mood_cluster3', 'mood_cluster4', 'mood_cluster5', 
+            'timbre_bright', 'timbre_dark', 'instrumental', 'voice', 'loudness','bpm']
     for i in range(count):
         songsDict = get25IDs(i, mbids)
         # dictList.append(songsDict)
