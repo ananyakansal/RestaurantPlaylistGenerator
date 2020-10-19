@@ -1,17 +1,19 @@
 import json
 import requests
 import csv
-import pandas
+import pandas as pd
 
 def getUrl(path):
     return 'https://acousticbrainz.org/api/v1/' + path
 
 def getHighLevelData(path):
-    resp = requests.get('https://acousticbrainz.org/api/v1/' + path + '/high-level')
+    resp = requests.get('https://acousticbrainz.org/api/v1/high-level?recording_ids=' + path)
+    # resp = requests.get('https://acousticbrainz.org/api/v1/' + path + '/high-level')
     return resp.json()
 
 def getLowLevelData(path):
-    resp = requests.get('https://acousticbrainz.org/api/v1/' + path + '/low-level')
+    resp = requests.get('https://acousticbrainz.org/api/v1/low-level?recording_ids=' + path)
+    # resp = requests.get('https://acousticbrainz.org/api/v1/' + path + '/low-level')
     return resp.json()
 
 def getTitle(highLevelData):
@@ -61,6 +63,7 @@ def makeSongDict(highLevelData, lowLevelData):
     }
     return song
 
+
 def makeListFromCsv(filePath):
     dictList  = []
     with open(filePath, 'r') as file:
@@ -69,5 +72,41 @@ def makeListFromCsv(filePath):
             mbid = row[0]
             song = makeSongDict(getHighLevelData(mbid), getLowLevelData(mbid))
             dictList.append(song)
+    keys = dictList[0].keys()
+    with open('songData.csv', 'w', newline='')  as output_file:
+        dict_writer = csv.DictWriter(output_file, keys)
+        dict_writer.writeheader()
+        dict_writer.writerows(dictList)
+    return dictList
+
+def makeCsv(filePath):
+    df = pd.read_csv(filePath, header=0, sep='\t')
+    mbids = df.recordingmbid.to_list()
+    count = int(len(mbids)/25)
+    for i in range(count):
+        songsDict = get25IDs(i, mbids)
+        # dictList.append(songsDict)
+        keys = songsDict[0].keys()
+        with open('songData.csv', 'a', newline='')  as output_file:
+            dict_writer = csv.DictWriter(output_file, keys)
+            dict_writer.writeheader()
+            dict_writer.writerows(songsDict)
+
+def get25IDs(count, mbids):
+    mbidString = ''
+    miniList = []
+    for i in range(25):
+        mbidString += (mbids[i+(count*25)] + ';')
+        miniList.append(mbids[i+(count*25)])
+    mbidString = mbidString[:-1]
+    highLevel = getHighLevelData(mbidString)
+    lowLevel = getLowLevelData(mbidString)
+    dictList = []
+    for i in range(25):
+        try:
+            song = makeSongDict(highLevel[miniList[i]]['0'], lowLevel[miniList[i]]['0'])
+            dictList.append(song)
+        except:
+            pass
     return dictList
 
