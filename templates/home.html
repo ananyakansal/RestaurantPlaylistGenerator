@@ -10,72 +10,79 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="/static/home.css">
     
-        <div class="grid-container">
-            <div class="player">
-                    <img alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg" class="center">
+        <header class="container">
+            <div class= "row" style="margin-bottom: 2.5em;padding: 0em 0em 0em; border-width: 2px; border-color: black; border-style:solid;">
+              <h1 class= "col-sm-8" style="margin-top: 0.25em; margin-bottom: 0.25em;"><u>  Restaurant Playlist Generator </u></h1>
+              <nav class="col-sm-4 text-right">
+                <a href="{{ url_for('callback')}}" style="margin: 1em" class="btn btn-success" type="button">Login</a>
+              </nav>
+            </div>
+        </header>
+        <div class="grid-container" style="margin: 2em">
+            <div class="player" style="padding: 1em 1em 1em; border-color: black; border-style: solid;">
+                    <img class="col align-self-center col-md-5" style="margin: 0.75em" alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg">    
+
                     <div class="row">
                         <div class="col-md-4">
-                             
-                            <button type="prev" class="btn btn-success">
+                            <button type="prev" class="btn btn-success text-left">
                                 Rewind
                             </button>
                         </div>
                         <div class="col-md-4">
                              
-                            <button type="playPause" class="btn btn-success">
+                            <button type="playPause" class="btn btn-success text-center">
                                 Play/Pause
                             </button>
                         </div>
                         <div class="col-md-4">
                              
-                            <button type="next" class="btn btn-success btn-sm">
+                            <button type="next" class="btn btn-success btn-sm text-right">
                                 Forward
                             </button>
                         </div>
                     </div>
-                    <div class="row">
-                             
-                            <button type="button" class="btn btn-success">
-                                Refresh
-                            </button>
-                            <h3>
-                                Queue
-                            </h3>
-                        </div>
-                        <div class="col-md-9">
-                    </div>
+                    
             </div>
-            <div class="Selector">
-                <p><a href="{{ url_for('callback')}}" >
-                    <button 
-                    class=grey 
-                    style="height:75px;width:150px">
-                    Spotify Login (TEST)
-                </button></a></p>
+            <div class="queue" style="padding: 1em 1em 1em; border-color: black; border-style: solid;">
+                <div class="row"> 
+                    <div class="col-md-9">
+                        <h3>Queue</h3>  
+                    </div>
+                    <div class=col-md-3>
+                        <button type="button" class="btn btn-success">
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="Selector" style="padding: 1em 1em 1em; border-color: black; border-style: solid;">
+                <a href="{{ url_for('callback')}}" class="btn btn-success" type="button" style="height:30px;width:100px">Login</a>
                     <h3>
                         Spec Selector
                     </h3>
-                    <div class="row">
+                    <h6>Mood (gotta make these toggles)</h6>
+                    <div class="row" style="margin-bottom: 2em;">
                         <div class="col-md-2">
-                             <a href="#" class="btn btn-secondary" type="button">Button</a>
+                             <a href="#" class="btn btn-secondary" type="button">Happy</a>
                         </div>
                         <div class="col-md-2">
-                             <a href="#" class="btn btn-secondary" type="button">Button</a>
+                             <a href="#" class="btn btn-secondary" type="button">Sad</a>
                         </div>
                         <div class="col-md-2">
-                             <a href="#" class="btn btn-secondary" type="button">Button</a>
+                             <a href="#" class="btn btn-secondary" type="button">Upbeat</a>
                         </div>
                         <div class="col-md-2">
-                             <a href="#" class="btn btn-secondary" type="button">Button</a>
+                             <a href="#" class="btn btn-secondary" type="button">Balad</a>
                         </div>
                         <div class="col-md-2">
-                             <a href="#" class="btn btn-secondary" type="button">Button</a>
+                             <a href="#" class="btn btn-secondary" type="button">idk</a>
                         </div>
                         <div class="col-md-2">
-                             <a href="#" class="btn btn-secondary" type="button">Button</a>
+                             <a href="#" class="btn btn-secondary" type="button">something</a>
                         </div>
                     </div>
-                    <div class="row">
+                    <h6>Genre</h6>
+                    <div class="row" style="margin-bottom: 2em;">
                         <div class="col-md-12">
                             <div class="dropdown">
                                  
@@ -88,7 +95,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <h6>Tempo I guess (see how to do a slider)</h6>
+                    <div class="row" style="margin-bottom: 2em;">
+                        <div class="col-md-12">
+                            <a href="#" class="btn btn-secondary" type="button">we gon have something else here</a>
+                        </div>
+                    </div>
+                    <h6>Reset & progress</h6>
+                    <div class="row" style="margin-bottom: 2em;">
                         <div class="col-md-6">
                              
                             <button type="button" class="btn btn-success">
@@ -96,16 +110,17 @@
                             </button>
                         </div>
                         <div class="col-md-6">
-                            <div class="progress">
-                                <div class="progress-bar w-75 progress-bar-striped">
+                            <div class="progress" style="margin: 0.5em">
+                                <div class="progress-bar w-75 progress-bar-striped">Refresh Progress</a>
                                 </div>
                             </div>
                         </div>
                     </div>
             </div>
-            <div class="User-Feedback"></div>
+            <div class="User-Feedback" style="padding: 1em 1em 1em; border-color: black; border-style: solid;">
+            <h1>User Feedback Placement</h1>
+            </div>
           </div>
-        <title>Homepage</title>
       </head>
       <body>
        

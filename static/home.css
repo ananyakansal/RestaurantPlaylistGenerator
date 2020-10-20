@@ -2,23 +2,105 @@
     display: grid;
     grid-template-columns: 1.5fr 0.9fr 0.8fr 1fr;
     grid-template-rows: 1.2fr 1.2fr 0.6fr;
-    gap: 0px 0px;
-    grid-template-areas:
-      "player Selector Selector Selector"
-      "player Selector Selector Selector"
-      "player User-Feedback User-Feedback User-Feedback";
+    gap: 5px 5px;
   }
   
-  .player { grid-area: player; }
+  .player { 
+      grid-area: 1 / 1 / 4 / 2; 
+      text-align: center;
+      justify-content: center;
+    }
   
-  .Selector { grid-area: Selector; }
+  .Selector { 
+      grid-area: 1 / 2 / 3 / 5; 
+      text-align: center;
+    }
   
-  .User-Feedback { grid-area: User-Feedback; }
+  .User-Feedback { grid-area: 3 / 2 / 4 / 5; }
+  
+  .queue { 
+      grid-area: 3 / 1 / 4 / 2;
+      margin-left: 5px;
+  }
+  
 
-  .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-  }
+  .artwork-wrapper {
+    height:200px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    text-align:center;
+    border:solid 1px #eee;
+}
+
+.artwork-wrapper img {
+    max-height:100px;
+    max-width:100%;
+}
+
+
+
+
+
+
+
+
+
+
+header .row,
+footer .row {
+  display: flex;
+  align-items: center;
+  padding: 32px;
+}
+
+header nav {
+  display: flex;
+  justify-content: flex-end; 
+  font-weight: bold;
+}
+
+/* I'm adding a padding to only two of my nav elements because they were squashed together. In order to do that i had to give those elements a class first:class=blog1 */
+.blog1 {
+ padding-left: 40px;   
+}
+
+.jumbotron {
+  display:flex;
+  align-items: center;
+  background-image: url('https://img.etsystatic.com/il/26cfc1/1402773656/il_570xN.1402773656_121s.jpg' );
+  background-repeat: no-repeat;
+  background-position: 80% 80%;
+  color:#ffffff ;
+  height:695px;    
+}
+
+section.row:{
+ display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+ 
+
+}
+section .row img {
+   margin: 10px 0 30px; /* added the margin top and bottom to seperate the title from the actual image */
+   float:left;
+   width:55%      
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+}
+ 
+footer img {
+  width: 40px;
+  height: 40px;
+}
+
+footer .col-sm-8 {
+  display: flex;
+ justify-content:center;
+
+}
   
