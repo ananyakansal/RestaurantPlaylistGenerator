@@ -1,20 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/home.css">
     
+        <div class="grid-container">
+            <div class="player">
+                    <img alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg" class="center">
+                    <div class="row">
+                        <div class="col-md-4">
+                             
+                            <button type="prev" class="btn btn-success">
+                                Rewind
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                             
+                            <button type="playPause" class="btn btn-success">
+                                Play/Pause
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                             
+                            <button type="next" class="btn btn-success btn-sm">
+                                Forward
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                             
+                            <button type="button" class="btn btn-success">
+                                Refresh
+                            </button>
+                            <h3>
+                                Queue
+                            </h3>
+                        </div>
+                        <div class="col-md-9">
+                    </div>
+            </div>
+            <div class="Selector">
+                <p><a href="{{ url_for('callback')}}" >
+                    <button 
+                    class=grey 
+                    style="height:75px;width:150px">
+                    Spotify Login (TEST)
+                </button></a></p>
+                    <h3>
+                        Spec Selector
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-2">
+                             <a href="#" class="btn btn-secondary" type="button">Button</a>
+                        </div>
+                        <div class="col-md-2">
+                             <a href="#" class="btn btn-secondary" type="button">Button</a>
+                        </div>
+                        <div class="col-md-2">
+                             <a href="#" class="btn btn-secondary" type="button">Button</a>
+                        </div>
+                        <div class="col-md-2">
+                             <a href="#" class="btn btn-secondary" type="button">Button</a>
+                        </div>
+                        <div class="col-md-2">
+                             <a href="#" class="btn btn-secondary" type="button">Button</a>
+                        </div>
+                        <div class="col-md-2">
+                             <a href="#" class="btn btn-secondary" type="button">Button</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="dropdown">
+                                 
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                                    Genre Select
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                     <a class="dropdown-item disabled" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                             
+                            <button type="button" class="btn btn-success">
+                                Reset Queue
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="progress">
+                                <div class="progress-bar w-75 progress-bar-striped">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="User-Feedback"></div>
+          </div>
         <title>Homepage</title>
       </head>
       <body>
-        <h1>Homepage</h1>
-        <p><a href="{{ url_for('callback')}}" ><button class=grey style="height:75px;width:150px">Spotify Login (TEST)</button></a></p>
-        </script>
-    
+       
 
 
         <!-- Optional JavaScript -->
