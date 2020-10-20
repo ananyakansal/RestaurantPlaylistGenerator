@@ -44,7 +44,7 @@
 
 
 
-
+/* this part i got from a template online and im still learning what it does so dont mess with this just yet */
 
 
 header .row,
@@ -75,11 +75,10 @@ header nav {
   height:695px;    
 }
 
-section.row:{
+section.row {
  display:flex;
   flex-wrap:wrap;
   justify-content:center;
- 
 
 }
 section .row img {
