@@ -39,7 +39,7 @@
   };</script>
   
 </script>
-<p id="demo">A Paragraph</p>
+<p id="demo">Tester</p>
 <!-- <a href='/play/'><input type=button value='value=”call_flask_funtion”></a> -->
 <!-- <button type="button" onclick="play()">Play</button> -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -47,7 +47,7 @@
         $(function() {
           $('a#initPlayer').bind('click', function() {
             $.getJSON('/initPlayer',
-                function(data) {
+                function() {
               //do nothing
             });
         return false;
@@ -57,7 +57,7 @@
     $(function() {
           $('a#startPlayback').bind('click', function() {
             $.getJSON('/startPlayback',
-                function(data) {
+                function() {
               //do nothing
             });
         return false;
@@ -67,7 +67,25 @@
     $(function() {
           $('a#pausePlayback').bind('click', function() {
             $.getJSON('/pausePlayback',
-                function(data) {
+                function() {
+              //do nothing
+            });
+        return false;
+      });
+    });
+    $(function() {
+          $('a#addQueue').bind('click', function() {
+            $.getJSON('/addQueue',
+                function() {
+              //do nothing
+            });
+        return false;
+      });
+    });
+    $(function() {
+          $('a#nextTrack').bind('click', function() {
+            $.getJSON('/nextTrack',
+                function() {
               //do nothing
             });
         return false;
@@ -78,6 +96,8 @@
   <a href=# id=initPlayer><button class='btn btn-default'>Initialize Player</button></a>
   <a href=# id=startPlayback><button class='btn btn-default'>Play</button></a>
   <a href=# id=pausePlayback><button class='btn btn-default'>Pause</button></a>
+  <a href=# id=addQueue><button class='btn btn-default'>Queue</button></a>
+  <a href=# id=nextTrack><button class='btn btn-default'>Next</button></a>
 </form>
 
 </body>

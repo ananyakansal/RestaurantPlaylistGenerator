@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/home.css">
+    
+        <header class="container">
+            <div class= "row" style="margin-bottom: 2.5em;padding: 0em 0em 0em; border-width: 2px; border-color: black; border-style:solid;">
+              <h1 class= "col-sm-8" style="margin-top: 0.25em; margin-bottom: 0.25em;"><u>  Restaurant Playlist Generator </u></h1>
+              <nav class="col-sm-4 text-right">
+                <a href=# id=initPlayer style="margin: 1em" class="btn btn-success" type="button">Init Player</a>
+              </nav>
+            </div>
+        </header>
+        <div class="grid-container" style="margin: 2em">
+            <div class="player" style="padding: 1em 1em 1em; border-color: black; border-style: solid;">
+                    <img class="col align-self-center col-md-5" style="margin: 0.75em" alt="Bootstrap Image Preview" src="https://www.layoutit.com/img/sports-q-c-140-140-3.jpg">    
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href=# id=startPlayback><button class="btn btn-success text-left">
+                                Play
+                            </button></a>
+                        </div>
+                        <div class="col-md-4">
+                             
+                            <a href=# id=pausePlayback><button type="pause" class="btn btn-success text-center">
+                                Pause
+                            </button></a>
+                        </div>
+                        <div class="col-md-4">
+                             
+                            <button type="next" class="btn btn-success btn-sm text-right">
+                                Forward
+                            </button>
+                        </div>
+                    </div>
+                    
+            </div>
+            <div class="queue" style="padding: 1em 1em 1em; border-color: black; border-style: solid;">
+                <div class="row"> 
+                    <div class="col-md-9">
+                        <h3>Queue</h3>  
+                    </div>
+                    <div class=col-md-3>
+                        <button type="button" class="btn btn-success">
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="Selector" style="padding: 1em 1em 1em; border-color: black; border-style: solid;">
+                    <h2><b>Spec Selector</b></h2>
+                    <h6>Mood (gotta make these toggles)</h6>
+                    <div class="row" style="margin-bottom: 2em;">
+                        <div class="col-md-2">
+                             <a href="#" class="btn btn-secondary" type="button">Happy</a>
+                        </div>
+                        <div class="col-md-2">
+                             <a href="#" class="btn btn-secondary" type="button">Sad</a>
+                        </div>
+                        <div class="col-md-2">
+                             <a href="#" class="btn btn-secondary" type="button">Upbeat</a>
+                        </div>
+                        <div class="col-md-2">
+                             <a href="#" class="btn btn-secondary" type="button">Ballad</a>
+                        </div>
+                        <div class="col-md-2">
+                             <a href="#" class="btn btn-secondary" type="button">idk</a>
+                        </div>
+                        <div class="col-md-2">
+                             <a href="#" class="btn btn-secondary" type="button">something</a>
+                        </div>
+                    </div>
+                    <h6>Genre</h6>
+                    <div class="row" style="margin-bottom: 2em;">
+                        <div class="col-md-12">
+                            <div class="dropdown">
+                                 
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                                    Genre Select
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                     <a class="dropdown-item disabled" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h6>Tempo I guess (see how to do a slider)</h6>
+                    <div class="row" style="margin-bottom: 2em;">
+                        <div class="col-md-12">
+                            <a href="#" class="btn btn-secondary" type="button">we gon have something else here</a>
+                        </div>
+                    </div>
+                    <h6>Reset & progress</h6>
+                    <div class="row" style="margin-bottom: 2em;">
+                        <div class="col-md-6">
+                             
+                            <button type="button" class="btn btn-success">
+                                Reset Queue
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="progress" style="margin: 0.5em">
+                                <div class="progress-bar w-75 progress-bar-striped">Refresh Progress</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="User-Feedback" style="padding: 1em 1em 1em; border-color: black; border-style: solid;">
+            <h1>User Feedback Placement</h1>
+            </div>
+          </div>
+      </head>
+      <body>
+
+        <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <script> window.onSpotifyWebPlaybackSDKReady = () => {
+    // var token = "BQCCx9lpjrViiy5JiP7_pEwGsNAUOjAet9ADCdDN6cIYgFLYpJZiSuPuXzyvRKt9LteFgEQCRwpI2QlmdbPsTe4JrV6jYA8koZRYbYzBdVQTDyrTi9HiTXQXHMPGV3DIH7BKgVi1NpJ-rd-oTuILcMWcw4Cy2drBRqzDrZ7fuapXkDUIEVNIjdw";
+    const accessToken = '{{token.userToken}}';
+    var player = new Spotify.Player({
+      name: 'Spotify Player',
+      getOAuthToken: cb => { cb(accessToken); }
+    });
+
+    // Error handling
+    player.addListener('initialization_error', ({ message }) => { console.error(message); });
+    player.addListener('authentication_error', ({ message }) => { console.error(message); });
+    player.addListener('account_error', ({ message }) => { console.error(message); });
+    player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+    // Playback status updates
+    player.addListener('player_state_changed', state => { console.log(state); });
+
+    // Ready
+    player.addListener('ready', ({ device_id }) => {
+      console.log('Ready with Device ID', device_id);
+      var deviceID = device_id
+    });
+
+    // Not Ready
+    player.addListener('not_ready', ({ device_id }) => {
+      console.log('Device ID has gone offline', device_id);
+    });
+
+    // Connect to the player!
+    player.connect();
+  };</script>
+    
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+     
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+        $(function() {
+          $('a#initPlayer').bind('click', function() {
+            $.getJSON('/initPlayer',
+                function() {
+              //do nothing
+            });
+        return false;
+      });
+    });
+
+    $(function() {
+          $('a#startPlayback').bind('click', function() {
+            $.getJSON('/startPlayback',
+                function() {
+              //do nothing
+            });
+        return false;
+      });
+    });
+    
+    $(function() {
+          $('a#pausePlayback').bind('click', function() {
+            $.getJSON('/pausePlayback',
+                function() {
+              //do nothing
+            });
+        return false;
+      });
+    });
+    $(function() {
+          $('a#addQueue').bind('click', function() {
+            $.getJSON('/addQueue',
+                function() {
+              //do nothing
+            });
+        return false;
+      });
+    });
+    $(function() {
+          $('a#nextTrack').bind('click', function() {
+            $.getJSON('/nextTrack',
+                function() {
+              //do nothing
+            });
+        return false;
+      });
+    });
+</script>
+<!-- <form>
+  <a href=# id=initPlayer><button class='btn btn-default'>Initialize Player</button></a>
+  <a href=# id=startPlayback><button class='btn btn-default'>Play</button></a>
+  <a href=# id=pausePlayback><button class='btn btn-default'>Pause</button></a>
+  <a href=# id=addQueue><button class='btn btn-default'>Queue</button></a>
+  <a href=# id=nextTrack><button class='btn btn-default'>Next</button></a>
+</form> -->
+    
+    </body>
+    </html>
+    
