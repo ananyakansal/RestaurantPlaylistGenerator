@@ -6,20 +6,18 @@
   }
   
   .player { 
-      grid-area: 1 / 1 / 4 / 2; 
+      grid-area: 1 / 1 / 2 / 2; 
       text-align: center;
       justify-content: center;
     }
   
   .Selector { 
-      grid-area: 1 / 2 / 3 / 5; 
+      grid-area: 1 / 2 / 4 / 5; 
       text-align: center;
     }
   
-  .User-Feedback { grid-area: 3 / 2 / 4 / 5; }
-  
   .queue { 
-      grid-area: 3 / 1 / 4 / 2;
+      grid-area: 2 / 1 / 4 / 2;
       margin-left: 5px;
   }
   
