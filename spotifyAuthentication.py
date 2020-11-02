@@ -2,7 +2,7 @@ import requests
 import json
 
 ##server side
-CLIENT_ID = ""
+CLIENT_ID = "cc02566bde9444cdb1aa1855f3fce9d1"
 CLIENT_SECRET = ""
 PORT = "5000"
 CLIENT_URL = "http://127.0.0.1"
@@ -48,7 +48,10 @@ def refreshToken(time):
     return TOKEN_DATA
 
 def handleToken(response):
-    auth_head = {"Authorization": "Bearer {}".format(response["access_token"])}
+    global auth_head
+    auth_head = {'Accept': 'application/json',
+                'Content-Type': 'application/json', 
+                "Authorization": "Bearer {}".format(response["access_token"])}
     REFRESH_TOKEN = response["refresh_token"]
     return [response["access_token"], auth_head, response["scope"], response["expires_in"]]
 

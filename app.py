@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, url_for
 import spotifyAuthentication
 import spotifyPlayback
+import spotifyPlayback2
 import json
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
@@ -20,24 +21,21 @@ def callback():
 def player():
     userToken = spotifyAuthentication.getUserToken(request.args['code'])
     token = {'userToken': userToken[0]}
-    print(token)
-    return render_template('temp.html', token=token)
+    return render_template('temp.html', token=token, songTitle={'Superstition'})
 
 @app.route("/initPlayer")
 def initPlayer():
-    spotifyPlayback.initPlayer()
+    spotifyPlayback2.initPlayer()
     return 'nothing'
 
 @app.route("/startPlayback")
 def startPlayback():
-    spotifyPlayback.startPlayback('spotify:track:4N0TP4Rmj6QQezWV88ARNJ')
-    # spotifyPlayback.
-    # spotifyPlayback.startPlayback()
+    spotifyPlayback2.startPlayback('spotify:track:4N0TP4Rmj6QQezWV88ARNJ')
     return 'nothing'
 
 @app.route("/pausePlayback")
 def pausePlayback():
-    spotifyPlayback.pausePlayback()
+    spotifyPlayback2.pausePlayback()
     return 'nothing'
 
 @app.route('/addQueue')
