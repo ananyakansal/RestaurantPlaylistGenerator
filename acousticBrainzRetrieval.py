@@ -2,6 +2,8 @@ import json
 import requests
 import csv
 import pandas as pd
+import spotifyPlayback
+import string
 
 def getUrl(path):
     return 'https://acousticbrainz.org/api/v1/' + path
@@ -17,13 +19,17 @@ def getLowLevelData(path):
     return resp.json()
 
 def getTitle(highLevelData):
-    return highLevelData['metadata']['tags']['title']
+    title = highLevelData['metadata']['tags']['title']
+    title = (str(title)).translate(str.maketrans('', '', '\"[]\''))
+    return title
 
 def getArtist(highLevelData):
-    return highLevelData['metadata']['tags']['artist']
+    artist = highLevelData['metadata']['tags']['artist']
+    return (str(artist)).translate(str.maketrans('', '', '\"[]\''))
 
 def getAlbum(highLevelData):
-    return highLevelData['metadata']['tags']['album']
+    album = highLevelData['metadata']['tags']['album']
+    return (str(album)).translate(str.maketrans('', '', '\"[]\''))
 
 def getDanceability(highLevelData):
     return highLevelData['highlevel']['danceability']['all']
@@ -55,10 +61,13 @@ def makeSongDict(highLevelData, lowLevelData):
     mood = getMood(highLevelData)
     timbre = getTimbre(highLevelData)
     instrumental = getInstrumental(highLevelData)
+    title = getTitle(highLevelData)
+    artist = getArtist(highLevelData)
+    album = getAlbum(highLevelData)
     song = {
-        'title' : getTitle(highLevelData), 
-        'artist' : getArtist(highLevelData), 
-        'album' : getAlbum(highLevelData), 
+        'title' : title, 
+        'artist' : artist, 
+        'album' : album, 
         'danceable' : dance['danceable'],
         'not_danceable' : dance['not_danceable'],
         'genre_cla' : genre['cla'], 
@@ -79,7 +88,8 @@ def makeSongDict(highLevelData, lowLevelData):
         'instrumental' : instrumental['instrumental'],
         'voice' : instrumental['voice'],
         'loudness' : getLoudness(lowLevelData),
-        'bpm' : getBpm(lowLevelData)
+        'bpm' : getBpm(lowLevelData),
+        'spotifyURI' : spotifyPlayback.getSpotifyURI(title=title, artist=artist, album=album)
     }
     return song
 
@@ -106,12 +116,12 @@ def makeCsv(filePath):
     keys = ['title','artist','album','danceable', 'not_danceable', 'genre_cla', 
             'genre_dan','genre_hip', 'genre_jaz', 'genre_pop', 'genre_rhy', 'genre_roc', 'genre_spe',
             'mood_cluster1', 'mood_cluster2', 'mood_cluster3', 'mood_cluster4', 'mood_cluster5', 
-            'timbre_bright', 'timbre_dark', 'instrumental', 'voice', 'loudness','bpm']
+            'timbre_bright', 'timbre_dark', 'instrumental', 'voice', 'loudness','bpm', 'spotifyURI']
     for i in range(count):
         songsDict = get25IDs(i, mbids)
         # dictList.append(songsDict)
         # keys = songsDict[0].keys()
-        with open('testSongData.csv', 'a', newline='')  as output_file:
+        with open('songData2.csv', 'a', newline='')  as output_file:
             dict_writer = csv.DictWriter(output_file, keys)
             # dict_writer.writeheader()
             dict_writer.writerows(songsDict)
@@ -134,5 +144,5 @@ def get25IDs(count, mbids):
             pass
     return dictList
 
-makeCsv('test.tsv')
+makeCsv('acousticbrainz-mediaeval-discogs-validation.tsv')
 
