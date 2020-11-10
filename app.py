@@ -4,10 +4,17 @@ import spotifyPlayback
 import spotifyPlayback2
 import json
 import spotipy
+import time
+import threading
 from spotipy.oauth2 import SpotifyOAuth
 
-
 app = Flask(__name__)
+
+global currSong
+currSong = 0
+global playFlag
+global event
+event = threading.Event()
 
 @app.route("/")
 def index():
@@ -30,12 +37,34 @@ def initPlayer():
 
 @app.route("/startPlayback")
 def startPlayback():
-    spotifyPlayback2.startPlayback('spotify:track:4N0TP4Rmj6QQezWV88ARNJ')
+    global currSong
+    global playFlag
+    global event
+    playFlag = True
+    #get list from Rose
+    playlist = ['spotify:track:0oQc0F6KUE7QY7k5TU6bic', 'spotify:track:7yBbV2k2S2uhaQc24NF2xt']
+    while (playFlag):
+        # progress = spotifyPlayback2.getProgress()
+        # if progress is 'NoneType':
+        #     progress = 0
+        duration = spotifyPlayback2.getSongLength(playlist[currSong])
+        spotifyPlayback2.startPlayback(playlist[currSong])
+        wait = float((duration))/1000.0
+        event.wait(wait)
+        # progress = spotifyPlayback2.getProgress()
+        # if(progress == duration):
+        currSong += 1
+    # return (title=title, albumArt=art)
+    # return render_template('temp.html', songTitle='testTest')
     return 'nothing'
 
 @app.route("/pausePlayback")
 def pausePlayback():
+    global playFlag
+    playFlag = False
     spotifyPlayback2.pausePlayback()
+    event.set()
+    print(spotifyPlayback2.getSongInfo('spotify:track:0oQc0F6KUE7QY7k5TU6bic'))
     return 'nothing'
 
 @app.route('/addQueue')
