@@ -45,6 +45,12 @@ def addToQueue():
     global queue
     queue.append(randomNext())
 
+def playQueue():
+    global queue
+    queue.append(randomNext())
+    print(queue)
+    return queue.popleft()
+
 def randomNext():
     seed()
     ind = randint(0, len(staticList))

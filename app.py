@@ -45,20 +45,19 @@ def startPlayback():
     global playFlag
     global event
     playFlag = True
-    #get list from Rose
-    playlist = getPlaylist.getStaticList()
-    # playlist = ['spotify:track:0oQc0F6KUE7QY7k5TU6bic', 'spotify:track:7yBbV2k2S2uhaQc24NF2xt']
-    spotifyPlayback2.startPlayback(playlist[currSong])
+    # playlist = getPlaylist.getStaticList()
+    # spotifyPlayback2.startPlayback(playlist[currSong])
+    spotifyPlayback2.startPlayback(getPlaylist.playQueue())
     firstPlay = True
     while (playFlag):
         progress = spotifyPlayback2.getProgress()
         if progress is 'NoneType':
             progress = 0
         # duration = spotifyPlayback2.getSongLength(playlist[currSong])
-        print(progress)
         if progress == 0 and not firstPlay:
             currSong += 1
-            spotifyPlayback2.startPlayback(playlist[currSong])
+            # spotifyPlayback2.startPlayback(playlist[currSong])
+            spotifyPlayback2.startPlayback(getPlaylist.playQueue())
             firstPlay = True
         else:
             firstPlay = False
