@@ -2,7 +2,7 @@ import requests
 import json
 
 ##server side
-CLIENT_ID = "cc02566bde9444cdb1aa1855f3fce9d1"
+CLIENT_ID = ""
 CLIENT_SECRET = ""
 PORT = "5000"
 CLIENT_URL = "http://127.0.0.1"
