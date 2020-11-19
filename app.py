@@ -19,7 +19,7 @@ event = threading.Event()
 
 @app.route("/")
 def index():
-    return render_template('home.html', title="Home")
+    return render_template('main.html', title="Home")
 
 @app.route("/callback/")
 def callback():
