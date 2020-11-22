@@ -3,7 +3,7 @@ import wave
 import numpy
 import math
 
-print('Recording...')
+print('Measuring...')
 def SPL(chunk):
     CHUNK = chunk
     FORMAT = pyaudio.paInt16
@@ -24,12 +24,11 @@ def SPL(chunk):
     for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
         data = numpy.frombuffer(stream.read(CHUNK), dtype = numpy.int16)
         newDecoded = numpy.max(data)/32767
-        blockLogRms = 20*numpy.log10(numpy.sqrt(numpy.mean(numpy.absolute(newDecoded)**2)))
+        print(newDecoded)
+        blockLogRms = 10*numpy.log10((numpy.mean(numpy.absolute((newDecoded)**2))))
         amps.append(blockLogRms)
         i = i + 1
     ave = sum(amps)/(RATE / CHUNK * RECORD_SECONDS)
-    #print(ave, "dB")
-
 
     stream.stop_stream()
     stream.close()
@@ -40,7 +39,6 @@ dbs = []
 while True:
     db = SPL(1024)
     dbs.append(db)
-    #print(dbs)
     window_size = 10
 
     j = 0
