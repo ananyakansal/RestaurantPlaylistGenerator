@@ -15,10 +15,12 @@ global currSong
 currSong = 0
 global playFlag
 global event
+global token
 event = threading.Event()
 
-@app.route("/")
+@app.route("/", methods= ['GET', 'POST'])
 def index():
+    getPlaylist.initStaticLists()
     return render_template('main.html', title="Home")
 
 @app.route("/callback/")
@@ -27,11 +29,20 @@ def callback():
 
 @app.route("/player/", methods= ['GET', 'POST'])
 def player():
-    userToken = spotifyAuthentication.getUserToken(request.args['code'])
-    token = {'userToken': userToken[0]}
-    return render_template('temp.html', token=token, songTitle={'song1'})
+    # userToken = spotifyAuthentication.getUserToken(request.args['code'])
+    # token = {'userToken': userToken[0]}
+    if request.method == "POST":
+        req = request.form
+        print(req)
+        return redirect(request.url)
+    else:
+        if 'code' in request.args:
+            userToken = spotifyAuthentication.getUserToken(request.args['code'])
+            global token
+            token = {'userToken': userToken[0]}
+        return render_template('player.html', token=token, songTitle={'song1'})
 
-@app.route("/initPlayer")
+@app.route("/initPlayer", methods= ['GET', 'POST'])
 def initPlayer():
     spotifyPlayback2.initPlayer()
     getPlaylist.initStaticLists()
