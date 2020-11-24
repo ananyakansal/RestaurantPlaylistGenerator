@@ -29,6 +29,7 @@ list21 = []
 list22 = []
 list23 = []
 list24 = []
+list25 = []
 staticList = []
 global queue
 queue = deque()
@@ -270,8 +271,6 @@ def initStaticLists():
                             if alldata[i][30] == 0:
                                 list25.append(alldata[i][24])
     
-
-
 def getStaticList():
     global staticList
     return staticList

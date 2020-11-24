@@ -50,11 +50,9 @@ def initPlayer():
     getPlaylist.initQueue()
     return 'nothing'
 
-@app.route("/startPlayback")
+@app.route("/startPlayback", methods= ['GET', 'POST'])
 def startPlayback():
-    global currSong
     global playFlag
-    global event
     playFlag = True
     # playlist = getPlaylist.getStaticList()
     # spotifyPlayback2.startPlayback(playlist[currSong])
@@ -66,7 +64,6 @@ def startPlayback():
             progress = 0
         # duration = spotifyPlayback2.getSongLength(playlist[currSong])
         if progress == 0 and not firstPlay:
-            currSong += 1
             # spotifyPlayback2.startPlayback(playlist[currSong])
             spotifyPlayback2.startPlayback(getPlaylist.playQueue())
             firstPlay = True
@@ -74,16 +71,13 @@ def startPlayback():
             firstPlay = False
     # return (title=title, albumArt=art)
     # return render_template('temp.html', songTitle='testTest')
-    userToken = spotifyAuthentication.getUserToken(request.args['code'])
-    token = {'userToken': userToken[0]}
     return render_template('temp.html', token=token, songTitle={'Test Song'})
 
-@app.route("/pausePlayback")
+@app.route("/pausePlayback", methods= ['GET', 'POST'])
 def pausePlayback():
     global playFlag
     playFlag = False
     spotifyPlayback2.pausePlayback()
-    event.set()
     # print(spotifyPlayback2.getSongInfo('spotify:track:0oQc0F6KUE7QY7k5TU6bic'))
     return 'nothing'
 
