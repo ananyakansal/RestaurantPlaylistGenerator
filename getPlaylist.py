@@ -276,8 +276,18 @@ def getStaticList():
     return staticList
 
 def setStaticList(genre=None, mood=None, timbre=None, instrumental=None, tempo=None, dance=None):
+    df = pd.read_csv('out.csv')
+    alldata = df.values.tolist()
     if genre is 'classical' and mood is 'cheerful' and timbre is 'bright' and instrumental is 'instrumental' and tempo is 'fast' and dance is 'not_dance':
         global list1
+        for i in range(0, len(alldata)):
+            if alldata[i][25] == 2:
+                if alldata[i][26] == 11:
+                    if alldata[i][27] == 15:
+                        if alldata[i][28] == 17:
+                            if alldata[i][29] == 19:
+                                if alldata[i][30] == 1:
+                                    list1.append(alldata[i][24])
         global staticList
         staticList = list1
 
@@ -306,6 +316,13 @@ def randomNext():
         ind = randint(0, len(staticList))
         song = staticList.pop(ind)
     return song
+
+def getQueue():
+    temp = []
+    temp.append(queue[0])
+    temp.append(queue[1])
+    temp.append(queue[2])
+    return temp
 
 # initStaticLists()
 # setStaticList('classical', 'cheerful', 'bright', 'instrumental', 'fast', 'not_dance')

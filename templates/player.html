@@ -31,9 +31,10 @@
     <div href="#" id="player" class="column w-col w-col-3" value="pause"><img src="{{ url_for('static', filename='Play.png') }}" loading="lazy" width="269" id="album-artwork" alt="" class="button">
       <h3 class="heading-2">Queue</h3>
       <ol id="queue" role="list" class="w-list-unstyled">
-        <li id="queue1"></li>
-        <li id="queue2"></li>
-        <li id="queue3"></li>
+        <li href=# id="queue1"></li>
+        <li href=# id="queue2"></li>
+        <li href=# id="queue3"></li>
+        <li href=# id="queue4"></li>
       </ol>
     </div>
     <div id="survey" class="w-col w-col-9">
@@ -160,18 +161,32 @@ $(function() {
       });
     }
   return false;
-});
+})
 });
 
-// $(function() {
-//     $('#player').bind('click', function() {
-//       $.getJSON('/playPause',
-//           function() {
-//         //do nothing
-//       });
-//   return false;
-// });
-// });
+setInterval("my_function();",4000); 
+function my_function() {
+  $(function() {
+        $.getJSON('/updateElements',
+          function(data) {
+          $("#queue1").text(data.song1);
+          $("#queue2").text(data.song2);
+          $("#queue3").text(data.song3);
+          $("#queue4").text(data.song4);
+        });
+        return false;
+      });
+    };
+
+$(function() {
+    $('#player').bind('click', function() {
+      $.getJSON('/playPause',
+          function() {
+        //do nothing
+      });
+  return false;
+});
+});
 $(function() {
     $('a#addQueue').bind('click', function() {
       $.getJSON('/addQueue',

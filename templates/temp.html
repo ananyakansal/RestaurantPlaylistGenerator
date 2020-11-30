@@ -46,7 +46,8 @@
             <div class="queue" style="padding: 1em 1em 1em; border-color: black; border-style: solid;">
                 <div class="row"> 
                     <div class="col-md-9">
-                        <h3>Queue</h3>  
+                        <h3>Queue</h3>
+                        <body>{{songTitle}}</body>  
                     </div>
                     <div class=col-md-3>
                         <button type="button" class="btn btn-success">
@@ -158,7 +159,7 @@
       </head>
       <body>
 
-        <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <script src="https://sdk.scdn.co/spotify-player.js"></script>
   <script> window.onSpotifyWebPlaybackSDKReady = () => {
     // var token = "BQCCx9lpjrViiy5JiP7_pEwGsNAUOjAet9ADCdDN6cIYgFLYpJZiSuPuXzyvRKt9LteFgEQCRwpI2QlmdbPsTe4JrV6jYA8koZRYbYzBdVQTDyrTi9HiTXQXHMPGV3DIH7BKgVi1NpJ-rd-oTuILcMWcw4Cy2drBRqzDrZ7fuapXkDUIEVNIjdw";
     const accessToken = '{{token.userToken}}';

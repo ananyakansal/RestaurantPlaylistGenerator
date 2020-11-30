@@ -67,7 +67,6 @@ def getProgress():
     header = spotifyAuthentication.auth_head
     response = requests.get(SPOTIFY_URL_PLAYER, headers = header)
     resp = response.json()
-    print(resp)
     return resp['progress_ms']
 
 def pausePlayback():
