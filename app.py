@@ -22,7 +22,8 @@ global event
 global token
 global queueUpdate
 global songSPL
-global totSPL
+global useSPL
+useSPL = False
 songSPL = []
 queueUpdate = True
 
@@ -62,7 +63,7 @@ def initPlayer():
 
 # @app.route("/initPlaylist", methods= ['POST', 'GET'])
 def initPlaylist(req):
-    
+    form = interpretForm(req)
     getPlaylist.setStaticList('classical', 'cheerful', 'bright', 'instrumental', 'fast', 'not_dance')
     getPlaylist.initQueue()
     global currSong
@@ -72,6 +73,21 @@ def initPlaylist(req):
     playerReady = True
     queueUpdate = True
     return 'nothing'
+
+def interpretForm(req):
+    global useSPL
+    mood = req['Genre']
+    genre = [k for k,v in req.items() if v == 'on']
+    instrument = req['instrumental']
+    timbre = req['radio-5']
+    tempo = req['radio']
+    dance = req['danceability']
+    if (req['radio-6'] == 'spl'):
+        useSPL = True
+    else:
+        useSPL = False
+    form = [genre, mood, timbre, instrument, tempo, dance]
+    return form
 
 @app.route("/startPlayback", methods= ['GET', 'POST'])
 def startPlayback():
