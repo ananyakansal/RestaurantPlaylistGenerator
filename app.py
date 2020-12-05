@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, request, url_for, jsonify
 import spotifyAuthentication
 import spotifyPlayback2
 import getPlaylist
+import new_getPlaylist
 import runningSPL
 import json
 import time
@@ -21,6 +22,8 @@ global event
 global token
 global queueUpdate
 global songSPL
+global totSPL
+songSPL = []
 queueUpdate = True
 
 @app.route("/", methods= ['GET', 'POST'])
@@ -65,7 +68,7 @@ def initPlaylist(req):
     global currSong
     global playerReady
     global queueUpdate
-    currSong = getPlaylist.playQueue()
+    currSong = getPlaylist.playQueue(songSPL)
     playerReady = True
     queueUpdate = True
     return 'nothing'
@@ -77,19 +80,20 @@ def startPlayback():
     global queueUpdate
     playFlag = True
     if (progress == 0):
-        currSong = getPlaylist.playQueue()
+        currSong = getPlaylist.playQueue(songSPL)
         spotifyPlayback2.startPlayback(currSong)
         queueUpdate = True
     spotifyPlayback2.startPlayback(currSong)
     # if request.method == "POST":
-    return render_template('player.html', token=token)
+    return 'nothing'
     # return songInfo[0]
 
 @app.route("/updateElements")
 def update():
     # queue = getPlaylist.getQueue()
     global queueUpdate
-    spl=runningSPL.SPL(1024)
+    # spl=runningSPL.SPL(1024)
+    spl=''
     if playerReady and queueUpdate:
         songInfo1 = spotifyPlayback2.getSongInfo(currSong)
         queue = getPlaylist.getQueue()
@@ -112,15 +116,18 @@ def checkPlaystate():
         playcheck()
         time.sleep(4)
 
+def checkSPL():
+    while True:
+        runSPL()
+
 def runSPL():
     global queueUpdate
-    songSPL = []
-    while True:
-        spl = runningSPL.SPL(1024)
-        songSPL.append(spl)
-        print(spl)
-        if (queueUpdate):
-            songSPL = []
+    global songSPL
+    spl=runningSPL.SPL(1024)
+    songSPL.append(spl)
+    # print(len(songSPL))
+    if queueUpdate:
+        songSPL = []
 
 def playcheck():
     global progress
@@ -134,9 +141,14 @@ def playcheck():
 
 if __name__ == "__main__":
     p = threading.Thread(target=checkPlaystate)
+    p.daemon = True
     p.start()
-    a = threading.Thread(target=runSPL)
-    a.start()
+    t = threading.Thread(target=checkSPL)
+    t.daemon = True
+    t.start()
+    # a = threading.Thread(target=runSPL)
+    # a.start()
     # app.config['TEMPLATES_AUTO_RELOAD'] = True
-    app.run(debug=True, port=5000)
-    # p.join()
+    a = threading.Thread(app.run(debug=True, threaded=True, port=5000))
+    p.join()
+    t.join()
