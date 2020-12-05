@@ -3,11 +3,11 @@ import wave
 import numpy
 import math
 
-print('Measuring...')
+# print('Measuring...')
 def SPL(chunk):
     CHUNK = chunk
     FORMAT = pyaudio.paInt16
-    CHANNELS = 2
+    CHANNELS = 1
     RATE = 44100
     RECORD_SECONDS = 1
 
@@ -24,7 +24,9 @@ def SPL(chunk):
     for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
         data = numpy.frombuffer(stream.read(CHUNK), dtype = numpy.int16)
         newDecoded = numpy.max(data)/32767
-        print(newDecoded)
+        # print(newDecoded)
+        # if (newDecoded == 0):
+        #     newDecoded = 0.5
         blockLogRms = 10*numpy.log10((numpy.mean(numpy.absolute((newDecoded)**2))))
         amps.append(blockLogRms)
         i = i + 1
@@ -35,22 +37,51 @@ def SPL(chunk):
     p.terminate()
     return ave
 
+# dbs = []
+# while True:
+#     db = SPL(1024)
+#     dbs.append(db)
+#     window_size = 10
+
+#     j = 0
+#     moving_averages = []
+#     warndown = -15
+#     warnup = 15
+
+#     while j < len(dbs) - window_size + 1:
+
+#         this_window = dbs[j : j + window_size]
+#         window_average = sum(this_window) / window_size
+#         moving_averages.append(window_average)
+#         j += 1
+#     if j >= 10:
+#         print(moving_averages[-1])
+
 dbs = []
-while True:
-    db = SPL(1024)
+moving_averages = []
+def getRMS(block=1024):
+    global dbs
+    global moving_averages 
+    db = SPL(block)
     dbs.append(db)
     window_size = 10
 
     j = 0
-    moving_averages = []
-    warndown = -15
-    warnup = 15
+    # warndown = -15
+    # warnup = 15
 
     while j < len(dbs) - window_size + 1:
-
-        this_window = dbs[j : j + window_size]
+        this_window = dbs[j : j + window_size - 1]
         window_average = sum(this_window) / window_size
         moving_averages.append(window_average)
-        j += 1
-    if j >= 10:
-        print(moving_averages[-1])
+        j += 1 
+        return window_average
+        # print(moving_averages)
+        # return (moving_averages[-1])
+        # if j >= 10:
+        #     print(moving_averages)
+        #     print(moving_averages[-1])
+        #     return moving_averages[-1]
+
+# while True:
+#     getRMS()

@@ -1,13 +1,11 @@
 from flask import Flask, render_template, redirect, request, url_for, jsonify
 import spotifyAuthentication
-import spotifyPlayback
 import spotifyPlayback2
 import getPlaylist
-import spotipy
+import runningSPL
 import json
 import time
 import threading
-from spotipy.oauth2 import SpotifyOAuth
 from multiprocessing import Process, Value
 
 app = Flask(__name__)
@@ -16,18 +14,18 @@ global currSong
 playFlag = False
 playerReady = False
 global progress
+global playerSet
+playerSet = False
 progress = 1
 global event
 global token
 global queueUpdate
+global songSPL
 queueUpdate = True
-event = threading.Event()
 
 @app.route("/", methods= ['GET', 'POST'])
 def index():
-    # getPlaylist.initStaticLists()
-    print("done")
-    return render_template('main.html', title="Home")
+    return render_template('about.html', title="Home")
 
 @app.route("/callback/")
 def callback():
@@ -35,23 +33,33 @@ def callback():
 
 @app.route("/player/", methods= ['GET', 'POST'])
 def player():
+    # global token
     # userToken = spotifyAuthentication.getUserToken(request.args['code'])
     # token = {'userToken': userToken[0]}
     if request.method == "POST":
         req = request.form
         print(req)
-        return redirect(request.url)
+        initPlaylist(req)
+        return json.dumps({'status':'OK', 'choices': req})
         # return render_template('player.html', token=token, songTitle='something')
     else:
         if 'code' in request.args:
-            userToken = spotifyAuthentication.getUserToken(request.args['code'])
             global token
+            userToken = spotifyAuthentication.getUserToken(request.args['code'])
             token = {'userToken': userToken[0]}
         return render_template('player.html', token=token)
 
-@app.route("/initPlayer", methods= ['GET', 'POST'])
+@app.route("/initPlayer", methods= ['GET','POST'])
 def initPlayer():
-    spotifyPlayback2.initPlayer()
+    global playerSet
+    if not playerSet:
+        spotifyPlayback2.initPlayer()
+        playerSet = True
+    return 'nothing'
+
+# @app.route("/initPlaylist", methods= ['POST', 'GET'])
+def initPlaylist(req):
+    
     getPlaylist.setStaticList('classical', 'cheerful', 'bright', 'instrumental', 'fast', 'not_dance')
     getPlaylist.initQueue()
     global currSong
@@ -60,7 +68,7 @@ def initPlayer():
     currSong = getPlaylist.playQueue()
     playerReady = True
     queueUpdate = True
-    return render_template('player.html', token=token, songTitle='songInfo[0]')
+    return 'nothing'
 
 @app.route("/startPlayback", methods= ['GET', 'POST'])
 def startPlayback():
@@ -81,6 +89,7 @@ def startPlayback():
 def update():
     # queue = getPlaylist.getQueue()
     global queueUpdate
+    spl=runningSPL.SPL(1024)
     if playerReady and queueUpdate:
         songInfo1 = spotifyPlayback2.getSongInfo(currSong)
         queue = getPlaylist.getQueue()
@@ -88,55 +97,46 @@ def update():
         songInfo3 = spotifyPlayback2.getSongInfo(queue[1])
         songInfo4 = spotifyPlayback2.getSongInfo(queue[2])
         queueUpdate = False
-        return jsonify(song1=songInfo1[0], song2=songInfo2[0], song3=songInfo3[0], song4=songInfo4[0])
-    return jsonify()
+        return jsonify(song1=songInfo1[0], song2=songInfo2[0], song3=songInfo3[0], song4=songInfo4[0], spl=spl)
+    return jsonify(spl=spl)
 
 @app.route("/pausePlayback", methods= ['GET', 'POST'])
 def pausePlayback():
     global playFlag
     playFlag = False
     spotifyPlayback2.pausePlayback()
-    # print(spotifyPlayback2.getSongInfo('spotify:track:0oQc0F6KUE7QY7k5TU6bic'))
     return 'nothing'
-
-@app.route('/addQueue')
-def addQueue():
-    spotifyPlayback.addSongToQueue('spotify:track:5aaUXcrsXI477I93yBE8lu')
-    return 'nothing'
-
-@app.route('/nextTrack')
-def nextTrack():
-    spotifyPlayback.nextSong()
-    return 'nothing'
-
-def tester():
-    while True:
-        print("testing ")
-        time.sleep(1)
 
 def checkPlaystate():
     while True:
         playcheck()
         time.sleep(4)
 
+def runSPL():
+    global queueUpdate
+    songSPL = []
+    while True:
+        spl = runningSPL.SPL(1024)
+        songSPL.append(spl)
+        print(spl)
+        if (queueUpdate):
+            songSPL = []
+
 def playcheck():
     global progress
     if playerReady and playFlag:
         # while not event.is_set():
         progress = spotifyPlayback2.getProgress()
-        if progress is 'NoneType':
+        if progress == 'NoneType':
             progress = 0
         if progress == 0:
             startPlayback()
 
 if __name__ == "__main__":
-    # tester = threading.Thread(target=tester())
-    # app.run(debug=True, port=5000)
-    # test_on = True
-    # p = Process(target=checkPlaystate)
-    # p.start() 
     p = threading.Thread(target=checkPlaystate)
     p.start()
+    a = threading.Thread(target=runSPL)
+    a.start()
     # app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.run(debug=True, port=5000)
     # p.join()

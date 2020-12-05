@@ -296,7 +296,7 @@ def initQueue():
     queue.append(randomNext())
     queue.append(randomNext())
     queue.append(randomNext())
-    print(queue)
+    # print(queue)
 
 def addToQueue():
     global queue
@@ -305,7 +305,7 @@ def addToQueue():
 def playQueue():
     global queue
     queue.append(randomNext())
-    print(queue)
+    # print(queue)
     return queue.popleft()
 
 def randomNext():

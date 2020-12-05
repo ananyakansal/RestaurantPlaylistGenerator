@@ -31,7 +31,7 @@
     <div href="#" id="player" class="column w-col w-col-3" value="pause"><img src="{{ url_for('static', filename='Play.png') }}" loading="lazy" width="269" id="album-artwork" alt="" class="button">
       <h3 class="heading-2">Queue</h3>
       <ol id="queue" role="list" class="w-list-unstyled">
-        <li href=# id="queue1"></li>
+        <li href=# id="queue1" style="color:white;"></li>
         <li href=# id="queue2"></li>
         <li href=# id="queue3"></li>
         <li href=# id="queue4"></li>
@@ -39,51 +39,54 @@
     </div>
     <div id="survey" class="w-col w-col-9">
       <div class="w-form">
-        <form id="survey-form" name="email-form" data-name="Email Form" action="/player/" method="POST" onsubmit="">
-          <h1 class="heading">Playlist Generator</h1><label for="name" id="restaurant-label" class="field-label">What Best Describes your Restaurant?</label>
+        <form href=# id="survey-form" name="email-form" data-name="Email Form" method="POST" onsubmit=''>
+          <h1 class="heading">Playlist Generator</h1><label for="name" id="restaurant-label" class="field-label">What Best Describes your Restaurant's mood?</label>
           <div class="w-row">
             <div class="w-col w-col-6"><label id="restaurant-choices" class="radio-button-field w-radio">
-                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre" id="Genre" name="Genre" value="Genre1" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-4" class="w-form-label">Fast Food</span>
+                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre" id="Genre" name="Genre" value="aggressive" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-4" class="w-form-label">aggressive</span>
               </label><label id="restaurant-choices" class="radio-button-field w-radio">
-                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 2" id="Genre-2" name="Genre" value="Genre2" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre" class="w-form-label">Fine Dining</span>
+                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 2" id="Genre-2" name="Genre" value="bittersweet" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre" class="w-form-label">bittersweet</span>
               </label><label id="restaurant-choices" class="radio-button-field w-radio">
-                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 3" id="Genre-3" name="Genre" value="Genre3" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-2" class="w-form-label">Modern Casual Hangout</span>
+                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 3" id="Genre-3" name="Genre" value="cheerful" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-2" class="w-form-label">cheerful</span>
               </label><label id="restaurant-choices" class="radio-button-field w-radio">
-                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 4" id="Genre-4" name="Genre" value="Genre4" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-3" class="w-form-label">Dance Club/Upbeat</span>
+                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 4" id="Genre-4" name="Genre" value="humourous" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-3" class="w-form-label">humorous</span>
               </label></div>
             <div class="w-col w-col-6"><label id="restaurant-choices" class="radio-button-field w-radio">
-                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 5" id="Genre-5" name="Genre" value="Genre5" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-5" class="w-form-label">Autumn Coffee Shop</span>
+                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 5" id="Genre-5" name="Genre" value="passionate" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-5" class="w-form-label">passionate</span>
               </label><label id="restaurant-choices" class="radio-button-field w-radio">
-                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 6" id="Genre-6" name="Genre" value="Genre6" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-6" class="w-form-label">Dive Bar</span>
+                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 6" id="Genre-6" name="Genre" value="all" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-6" class="w-form-label">a bit of everything</span>
               </label><label id="restaurant-choices" class="radio-button-field w-radio">
               </label></div>
           </div><label for="email" id="genre-label" class="field-label-2">What is your Preferred Genre(s)?</label>
           <div class="w-row">
             <div class="w-col w-col-6">
-              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox-7" name="checkbox-7" data-name="Checkbox 7" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">Classical</span></label>
-              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox-6" name="checkbox-6" data-name="Checkbox 6" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">Pop</span></label>
-              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox-8" name="checkbox-8" data-name="Checkbox 8" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">Rock</span></label>
-              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">Hip Hop</span></label></div>
+              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox-7" name="classical" data-name="Checkbox 7" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">Classical</span></label>
+              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox-6" name="pop" data-name="Checkbox 6" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">Pop</span></label>
+              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox-8" name="rock" data-name="Checkbox 8" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">Rock</span></label>
+              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox" name="hiphop" data-name="Checkbox" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">Hip Hop</span></label></div>
             <div class="w-col w-col-6">
-              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox-3" name="checkbox-3" data-name="Checkbox 3" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">R&amp;B</span></label>
-              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox-2" name="checkbox-2" data-name="Checkbox 2" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">Jazz</span></label>
-              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox-4" name="checkbox-4" data-name="Checkbox 4" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">EDM</span></label>
-              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox-5" name="checkbox-5" data-name="Checkbox 5" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">Speech</span></label></div>
+              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox-3" name="rhythmic" data-name="Checkbox 3" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">R&amp;B</span></label>
+              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox-2" name="jazz" data-name="Checkbox 2" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">Jazz</span></label>
+              <label id="genre-selector" class="w-checkbox"><input type="checkbox" id="checkbox-4" name="dance" data-name="Checkbox 4" class="w-checkbox-input checkbox"><span class="checkbox-label w-form-label">EDM</span></label></div>
           </div><label for="name" id="restaurant-label" class="field-label">Instrumental or Lyrical?</label>
           <div class="w-row">
             <div class="w-col w-col-4"><label id="instrumental" class="radio-button-field w-radio"><input type="radio" data-name="instrumental" id="instrumental" name="instrumental" value="instrumental" required="" class="w-form-formradioinput w-radio-input"><span for="instrumental" class="w-form-label">Instrumental</span></label></div>
-            <div class="w-col w-col-4"><label id="instrumental" class="radio-button-field w-radio"><input type="radio" data-name="Instrumental 2" id="instrumental-2" name="instrumental" value="instrumental" required="" class="w-form-formradioinput w-radio-input"><span for="instrumental-2" class="radio-button-label w-form-label">Lyrical</span></label></div>
-            <div class="w-col w-col-4"><label id="instrumental" class="radio-button-field w-radio"><input type="radio" data-name="Instrumental 3" id="instrumental-3" name="instrumental" value="instrumental" required="" class="w-form-formradioinput w-radio-input"><span for="instrumental-3" class="w-form-label">No Preference</span></label></div>
+            <div class="w-col w-col-4"><label id="instrumental" class="radio-button-field w-radio"><input type="radio" data-name="Instrumental 2" id="instrumental-2" name="instrumental" value="voice" required="" class="w-form-formradioinput w-radio-input"><span for="instrumental-2" class="radio-button-label w-form-label">Lyrical</span></label></div>
+            <div class="w-col w-col-4"><label id="instrumental" class="radio-button-field w-radio"><input type="radio" data-name="Instrumental 3" id="instrumental-3" name="instrumental" value="instrumVoice" required="" class="w-form-formradioinput w-radio-input"><span for="instrumental-3" class="w-form-label">No Preference</span></label></div>
           </div><label for="name" id="restaurant-label" class="field-label">How long do customers stay on average?</label>
           <div class="w-row">
-            <div class="w-col w-col-4"><label class="w-radio"><input type="radio" data-name="Radio 3" id="radio-3" name="radio" value="Radio" class="w-form-formradioinput w-radio-input"><span class="radio-button-label-2 w-form-label">&lt; 1 hour</span></label></div>
-            <div class="w-col w-col-4"><label class="w-radio"><input type="radio" data-name="Radio 3" id="radio-3" name="radio" value="Radio" class="w-form-formradioinput w-radio-input"><span class="radio-button-label-2 w-form-label">&gt; 1 hour</span></label></div>
-            <div class="column-2 w-col w-col-4"><label class="w-radio"><input type="radio" data-name="Radio 3" id="radio-3" name="radio" value="Radio" class="w-form-formradioinput w-radio-input"><span class="w-form-label">Varied</span></label></div>
+            <div class="w-col w-col-4"><label class="w-radio"><input type="radio" data-name="Radio 3" id="radio-3" name="radio" value="fast" class="w-form-formradioinput w-radio-input"><span class="radio-button-label-2 w-form-label">&lt; 1 hour</span></label></div>
+            <div class="w-col w-col-4"><label class="w-radio"><input type="radio" data-name="Radio 3" id="radio-3" name="radio" value="slow" class="w-form-formradioinput w-radio-input"><span class="radio-button-label-2 w-form-label">&gt; 1 hour</span></label></div>
+            <div class="column-2 w-col w-col-4"><label class="w-radio"><input type="radio" data-name="Radio 3" id="radio-3" name="fastSlow" value="Radio" class="w-form-formradioinput w-radio-input"><span class="w-form-label">Varied</span></label></div>
           </div><label for="name" id="restaurant-label" class="field-label">What kind of Music would you like?</label>
           <div class="w-row">
-            <div class="w-col w-col-6"><label class="radio-button-field-4 w-radio"><input type="radio" data-name="danceability" id="radio-4" name="danceability" value="Radio 4" class="w-form-formradioinput w-radio-input"><span class="w-form-label">Cool, Calm, and Collected</span></label></div>
-            <div class="w-col w-col-6"><label class="radio-button-field-4 w-radio"><input type="radio" data-name="danceability" id="radio-4" name="danceability" value="Radio 4" class="w-form-formradioinput w-radio-input"><span class="w-form-label">Toe Tappin&#x27;</span></label></div>
-          </div><input href="#" type="submit" value="Submit" data-wait="Please wait..." id="submit-queue" class="submit-button w-button">
+            <div class="w-col w-col-6"><label class="radio-button-field-4 w-radio"><input type="radio" data-name="danceability" id="radio-4" name="danceability" value= "not_dance" class="w-form-formradioinput w-radio-input"><span class="w-form-label">Cool, Calm, and Collected</span></label></div>
+            <div class="w-col w-col-6"><label class="radio-button-field-4 w-radio"><input type="radio" data-name="danceability" id="radio-4" name="danceability" value="dance" class="w-form-formradioinput w-radio-input"><span class="w-form-label">Toe Tappin&#x27;</span></label></div>
+          </div><label for="name" id="restaurant-label" class="field-label">Would it be okay if we used your microphone to get volume information to update the playlist?<br>*No information or audio is recorded or stored</label>
+          <div class="w-row">
+            <div class="w-col w-col-6"><label class="w-radio"><input type="radio" data-name="Radio 5" id="radio-5" name="radio-5" value="spl" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label">Yes, make my playlist awesome!</span></label></div>
+            <div class="w-col w-col-6"><label class="w-radio"><input type="radio" data-name="Radio 5" id="radio-5" name="radio-5" value="random" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label">No, randomize it!</span></label></div>
+          <input href="#" type="submit" value="Submit" data-wait="Please wait..." id="submit-queue" class="submit-button w-button">
         </form>
         <div class="w-form-done">
           <div>Thank you! Your submission has been received!</div>
@@ -119,6 +122,10 @@
     // Ready
     player.addListener('ready', ({ device_id }) => {
       console.log('Ready with Device ID', device_id);
+      $.getJSON('/initPlayer',
+          function() {
+        //do nothing
+      });
       var deviceID = device_id
     });
 
@@ -133,15 +140,63 @@
 
 <script type=text/javascript>
 
-  $(function() {
-    $('#submit-queue').bind('click', function() {
-      $.getJSON('/initPlayer',
-          function() {
-        //do nothing
-      });
-  return false;
+//   $(function() {
+//     $('#submit-queue').bind('click', function() {
+//       $.getJSON('/initPlaylist',
+//           function() {
+//         //do nothing
+//       });
+//   return false;
+// });
+// });
+
+$(function(){
+	$('#submit-queue').click(function(){
+		$.ajax({
+			url: '/player/',
+			data: $('#survey-form').serialize(),
+			type: 'POST',
+			success: function(response){
+				console.log(response);
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
+    // $.getJSON('/initPlaylist',
+    //       function() {
+    //     //do nothing
+    //       });
+	});
 });
-});
+
+// $(function() {
+//   $(document).ready(function(){
+//       $.getJSON('/initPlayer',
+//           function() {
+//         //do nothing
+//       });
+//   return false;
+// });
+// });
+
+// $(function() {
+//     $('#submit-queue').click(function(event)) {
+//       var form = $('#survey-form');
+//       var form_id = 'survey-form';
+//       var url = form.prop('action');
+//       var type = form.prop('method');
+//       var formData = getContactFormData(form_id);
+
+//       send_form(form, form_id, url, type, modular_ajax, formData)
+// });
+
+// function getFormData(form) {
+//     // creates a FormData object and adds chips text
+//     var formData = new FormData(document.getElementById(form));
+// //    for (var [key, value] of formData.entries()) { console.log('formData', key, value);}
+//     return formData
+// }
 
 $(function() {
     $('#player').bind('click', function() {
@@ -173,6 +228,7 @@ function my_function() {
           $("#queue2").text(data.song2);
           $("#queue3").text(data.song3);
           $("#queue4").text(data.song4);
+          $("#spl").text(data.spl)
         });
         return false;
       });
