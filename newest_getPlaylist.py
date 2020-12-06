@@ -9,14 +9,11 @@ from operator import itemgetter
 
 global queue
 queue = deque()
-global list1
-list1 = []
 global staticList
 staticList = []
 
 class SelectionError(Exception):
     pass
-
     
 def getStaticList():
     global staticList
@@ -109,7 +106,7 @@ def selectMultiple(genre=None, mood=None, timbre=None, instrument=None, tempo=No
     
 def setStaticList(genre=None, mood=None, timbre=None, instrument=None, tempo=None, dance=None):
     global staticList
-    staticList = []
+    staticList.clear()
     if tempo == 'fastSlow' or instrument == 'instrumVoice' or mood == 'all':
         selectMultiple(genre[0], mood, timbre, instrument, tempo, dance)
     else:   
@@ -131,9 +128,7 @@ def setStaticList(genre=None, mood=None, timbre=None, instrument=None, tempo=Non
     a,staticList = map(list,zip(*staticList))
 
 def setStaticListHelper(genre=None, mood=None, timbre=None, instrument=None, tempo=None, dance=None):
-    global list1
-    global staticList
-
+    list1=[]
     # Classical
     if genre == 'classical' and mood == 'aggressive' and timbre == 'bright' and instrument == 'instrumental' and tempo == 'fast' and dance == 'not_dance':
         df1 = pd.read_csv('songDataCSVs/ClaAggBriInsFasNot.csv')
