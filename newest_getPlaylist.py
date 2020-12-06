@@ -842,8 +842,8 @@ def initQueue():
     global queue
     queue.clear()
     queue.append(randomNext())
-    queue.append(randomNext())
-    queue.append(randomNext())
+    # queue.append(randomNext())
+    # queue.append(randomNext())
     # print(queue)
 
 def playQueue(useSPL, spl=None):
@@ -880,6 +880,10 @@ def splAvg(songSPL):
         return None
     return sum(songSPL)/len(songSPL)
 
+def clearQueue():
+    global queue
+    queue.clear()
+
 def gaussian_pick(ave,static_list): # takes in 'ave': spl value and the (length of the) static playlist
     # this generates a gaussian white noise
     mean = 0
@@ -908,8 +912,8 @@ def gaussian_pick(ave,static_list): # takes in 'ave': spl value and the (length 
 def getQueue():
     temp = []
     temp.append(queue[0])
-    temp.append(queue[1])
-    temp.append(queue[2])
+    # temp.append(queue[1])
+    # temp.append(queue[2])
     return temp
 
 

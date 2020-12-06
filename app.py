@@ -43,7 +43,10 @@ def player():
     if request.method == "POST":
         req = request.form
         print(req)
-        result = initPlaylist(req)
+        try:
+            result = initPlaylist(req)
+        except:
+            return json.dumps('Please fill out the entire form.')
         if result == 'ok':
             return json.dumps('Thank you! Your submission has been received!')
         else:
@@ -66,20 +69,23 @@ def initPlayer():
 
 # @app.route("/initPlaylist", methods= ['POST', 'GET'])
 def initPlaylist(req):
+    global queueUpdate
+    global currSong
     form = interpretForm(req)
     #newest_getPlaylist.setStaticList(['classical'], 'aggressive', 'bright', 'instrumental', 'fast', 'not_dance')
     try:
         newest_getPlaylist.setStaticList(form[0], form[1], form[2], form[3], form[4], form[5])
     except SelectionError as e:
         print(e)
+        newest_getPlaylist.clearQueue()
+        queueUpdate = True
+        currSong = ''
         return(e)
     newest_getPlaylist.initQueue()
-    global currSong
     global playerReady
-    global queueUpdate
     global playFlag
     global progress
-    progress = 0
+    progress = 1
     playFlag = False
     currSong = newest_getPlaylist.playQueue(songSPL)
     playerReady = True
@@ -124,17 +130,21 @@ def update():
     # queue = newest_getPlaylist.getQueue()
     global queueUpdate
     if useSPL:
-        spl=runningSPL.SPL(1024)
+        spl='Room Noise: ' + str(runningSPL.SPL(1024))
     else:
         spl=''
     if playerReady and queueUpdate:
+        try:
+            queue = newest_getPlaylist.getQueue()
+        except IndexError:
+            return jsonify(song1='', song2='', song3='', song4='', spl=spl)
         songInfo1 = spotifyPlayback2.getSongInfo(currSong)
-        queue = newest_getPlaylist.getQueue()
         songInfo2 = spotifyPlayback2.getSongInfo(queue[0])
-        songInfo3 = spotifyPlayback2.getSongInfo(queue[1])
-        songInfo4 = spotifyPlayback2.getSongInfo(queue[2])
+        # songInfo3 = spotifyPlayback2.getSongInfo(queue[1])
+        # songInfo4 = spotifyPlayback2.getSongInfo(queue[2])
         queueUpdate = False
-        return jsonify(song1=songInfo1[0], song2=songInfo2[0], song3=songInfo3[0], song4=songInfo4[0], spl=spl)
+        # return jsonify(song1=songInfo1[0], song2=songInfo2[0], song3=songInfo3[0], song4=songInfo4[0], spl=spl)
+        return jsonify(song1=songInfo1[0], song2=songInfo2[0], song3='', song4='', spl=spl)
     return jsonify(spl=spl)
 
 @app.route("/pausePlayback", methods= ['GET', 'POST'])
@@ -180,9 +190,6 @@ if __name__ == "__main__":
     t = threading.Thread(target=checkSPL)
     t.daemon = True
     t.start()
-    # a = threading.Thread(target=runSPL)
-    # a.start()
-    # app.config['TEMPLATES_AUTO_RELOAD'] = True
     a = threading.Thread(app.run(debug=True, threaded=False, port=5000))
     p.join()
     t.join()
