@@ -11,7 +11,7 @@ global queue
 queue = deque()
 global list1
 list1 = []
-
+global staticList
 staticList = []
 
 class SelectionError(Exception):
@@ -22,15 +22,110 @@ def getStaticList():
     global staticList
     return staticList
 
+def selectMultiple(genre=None, mood=None, timbre=None, instrument=None, tempo=None, dance=None):
+    global staticList
+    if tempo == 'fastSlow':
+        if instrument == 'instrumVoice':
+            if mood == 'all':
+                staticList = setStaticListHelper(genre=genre[0], mood='aggressive', timbre=timbre, instrument='instrumental', tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='aggressive', timbre=timbre, instrument='voice', tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='aggressive', timbre=timbre, instrument='intstrumental', tempo='slow', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='aggressive', timbre=timbre, instrument='voice', tempo='slow', dance=dance)
+
+                staticList = staticList + setStaticListHelper(genre=genre, mood='bittersweet', timbre=timbre, instrument='instrumental', tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='bittersweet', timbre=timbre, instrument='voice', tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='bittersweet', timbre=timbre, instrument='intstrumental', tempo='slow', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='bittersweet', timbre=timbre, instrument='voice', tempo='slow', dance=dance)
+
+                staticList = staticList + setStaticListHelper(genre=genre, mood='cheerful', timbre=timbre, instrument='instrumental', tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='cheerful', timbre=timbre, instrument='voice', tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='cheerful', timbre=timbre, instrument='intstrumental', tempo='slow', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='cheerful', timbre=timbre, instrument='voice', tempo='slow', dance=dance)
+
+                staticList = staticList + setStaticListHelper(genre=genre, mood='humorous', timbre=timbre, instrument='instrumental', tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='humorous', timbre=timbre, instrument='voice', tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='humorous', timbre=timbre, instrument='intstrumental', tempo='slow', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='humorous', timbre=timbre, instrument='voice', tempo='slow', dance=dance)
+
+                staticList = staticList + setStaticListHelper(genre=genre, mood='passionate', timbre=timbre, instrument='instrumental', tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='passionate', timbre=timbre, instrument='voice', tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='passionate', timbre=timbre, instrument='intstrumental', tempo='slow', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='passionate', timbre=timbre, instrument='voice', tempo='slow', dance=dance)
+            else:
+                staticList = staticList + setStaticListHelper(genre=genre, mood=mood, timbre=timbre, instrument='instrumental', tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood=mood, timbre=timbre, instrument='voice', tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood=mood, timbre=timbre, instrument='intstrumental', tempo='slow', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood=mood, timbre=timbre, instrument='voice', tempo='slow', dance=dance)
+        else:
+            if mood == 'all':
+                staticList = setStaticListHelper(genre=genre, mood='aggressive', timbre=timbre, instrument=instrument, tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='aggressive', timbre=timbre, instrument=instrument, tempo='slow', dance=dance)
+
+                staticList = staticList + setStaticListHelper(genre=genre, mood='bittersweet', timbre=timbre, instrument=instrument, tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='bittersweet', timbre=timbre, instrument=instrument, tempo='slow', dance=dance)
+
+                staticList = staticList + setStaticListHelper(genre=genre, mood='cheerful', timbre=timbre, instrument=instrument, tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='cheerful', timbre=timbre, instrument=instrument, tempo='slow', dance=dance)
+
+                staticList = staticList + setStaticListHelper(genre=genre, mood='humorous', timbre=timbre, instrument=instrument, tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='humorous', timbre=timbre, instrument=instrument, tempo='slow', dance=dance)
+
+                staticList = staticList + setStaticListHelper(genre=genre, mood='passionate', timbre=timbre, instrument=instrument, tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='passionate', timbre=timbre, instrument=instrument, tempo='slow', dance=dance)
+            else:
+                staticList = staticList + setStaticListHelper(genre=genre, mood=mood, timbre=timbre, instrument=instrument, tempo='fast', dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood=mood, timbre=timbre, instrument=instrument, tempo='slow', dance=dance)
+    else:
+        if instrument == 'instrumVoice':
+            if mood == 'all':
+                staticList = setStaticListHelper(genre=genre, mood='aggressive', timbre=timbre, instrument='instrumental', tempo=tempo, dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='aggressive', timbre=timbre, instrument='voice', tempo=tempo, dance=dance)
+
+                staticList = staticList + setStaticListHelper(genre=genre, mood='bittersweet', timbre=timbre, instrument='instrumental', tempo=tempo, dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='bittersweet', timbre=timbre, instrument='voice', tempo=tempo, dance=dance)
+
+                staticList = staticList + setStaticListHelper(genre=genre, mood='cheerful', timbre=timbre, instrument='instrumental', tempo=tempo, dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='cheerful', timbre=timbre, instrument='voice', tempo=tempo, dance=dance)
+
+                staticList = staticList + setStaticListHelper(genre=genre, mood='humorous', timbre=timbre, instrument='instrumental', tempo=tempo, dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='humorous', timbre=timbre, instrument='voice', tempo=tempo, dance=dance)
+
+                staticList = staticList + setStaticListHelper(genre=genre, mood='passionate', timbre=timbre, instrument='instrumental', tempo=tempo, dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood='passionate', timbre=timbre, instrument='voice', tempo=tempo, dance=dance)
+            else:
+                staticList = setStaticListHelper(genre=genre, mood=mood, timbre=timbre, instrument='instrumental', tempo=tempo, dance=dance)
+                staticList = staticList + setStaticListHelper(genre=genre, mood=mood, timbre=timbre, instrument='voice', tempo=tempo, dance=dance)
+        else:
+                if mood == 'all':
+                    staticList = setStaticListHelper(genre=genre, mood='aggressive', timbre=timbre, instrument=instrument, tempo=tempo, dance=dance)
+
+                    staticList = staticList + setStaticListHelper(genre=genre, mood='bittersweet', timbre=timbre, instrument=instrument, tempo=tempo, dance=dance)
+
+                    staticList = staticList + setStaticListHelper(genre=genre, mood='cheerful', timbre=timbre, instrument=instrument, tempo=tempo, dance=dance)
+
+                    staticList = staticList + setStaticListHelper(genre=genre, mood='humorous', timbre=timbre, instrument=instrument, tempo=tempo, dance=dance)
+
+                    staticList = staticList + setStaticListHelper(genre=genre, mood='passionate', timbre=timbre, instrument=instrument, tempo=tempo, dance=dance)
+    
 def setStaticList(genre=None, mood=None, timbre=None, instrument=None, tempo=None, dance=None):
     global staticList
     staticList = []
-    staticList = setStaticListHelper(genre=genre[0], mood=mood, timbre=timbre, instrument=instrument, tempo=tempo, dance=dance)
+    if tempo == 'fastSlow' or instrument == 'instrumVoice' or mood == 'all':
+        selectMultiple(genre[0], mood, timbre, instrument, tempo, dance)
+    else:   
+        staticList = setStaticListHelper(genre=genre[0], mood=mood, timbre=timbre, instrument=instrument, tempo=tempo, dance=dance)
     if len(genre) > 1:
-        for i in range(1, len(genre)):
-            tempList = setStaticListHelper(genre[i], mood, timbre, instrument, tempo, dance)
-            staticList = staticList + tempList
+        if tempo == 'fastSlow' or instrument == 'instrumVoice' or mood == 'all':
+            for i in range(1, len(genre)):
+                selectMultiple(genre[i], mood, timbre, instrument, tempo, dance)
+        else:
+            for i in range(1, len(genre)):
+                tempList = setStaticListHelper(genre[i], mood, timbre, instrument, tempo, dance)
+                staticList = staticList + tempList
         staticList = sorted(staticList)
+    else:
+        if tempo == 'fastSlow' or instrument == 'instrumVoice' or mood == 'all':
+            staticList = sorted(staticList)
     if not staticList:
         raise SelectionError("Please make a new selection")
     a,staticList = map(list,zip(*staticList))
@@ -61,7 +156,7 @@ def setStaticListHelper(genre=None, mood=None, timbre=None, instrument=None, tem
         list1 = np.transpose(df1.values.tolist())
 
     if genre == 'classical' and mood == 'bittersweet' and timbre == 'bright' and instrument == 'instrumental' and tempo == 'fast' and dance == 'not_dance':
-        df1 = pd.read_csv('songDataCSVs/ClaButBriInsFasNot.csv')
+        df1 = pd.read_csv('songDataCSVs/ClaBitBriInsFasNot.csv')
         list1 = np.transpose(df1.values.tolist())
 
     if genre == 'classical' and mood == 'bittersweet' and timbre == 'bright' and instrument == 'instrumental' and tempo == 'slow' and dance == 'not_dance':
@@ -324,35 +419,35 @@ def setStaticListHelper(genre=None, mood=None, timbre=None, instrument=None, tem
         df1 = pd.read_csv('songDataCSVs/PopAggBriVoiSlo.csv')
         list1 = np.transpose(df1.values.tolist())
        
-    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'instrumental' and tempo == 'fast' and ance == 'dance':
+    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'instrumental' and tempo == 'fast' and dance == 'dance':
         df1 = pd.read_csv('songDataCSVs/PopAggDarInsFasDan.csv')
         list1 = np.transpose(df1.values.tolist())
        
-    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'instrumental' and tempo == 'fast' and ance == 'not_dance':
+    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'instrumental' and tempo == 'fast' and dance == 'not_dance':
         df1 = pd.read_csv('songDataCSVs/PopAggDarInsFasNot.csv')
         list1 = np.transpose(df1.values.tolist())
 
-    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'instrumental' and tempo == 'slow' and ance == 'dance':
+    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'instrumental' and tempo == 'slow' and dance == 'dance':
         df1 = pd.read_csv('songDataCSVs/PopAggDarInsSloDan.csv')
         list1 = np.transpose(df1.values.tolist())
          
-    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'instrumental' and tempo == 'slow' and ance == 'not_dance':
+    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'instrumental' and tempo == 'slow' and dance == 'not_dance':
         df1 = pd.read_csv('songDataCSVs/PopAggDarInsSloNot.csv')
         list1 = np.transpose(df1.values.tolist())
        
-    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'voice' and tempo == 'fast' and ance == 'dance':
+    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'voice' and tempo == 'fast' and dance == 'dance':
         df1 = pd.read_csv('songDataCSVs/PopAggDarVoiFasDan.csv')
         list1 = np.transpose(df1.values.tolist())
        
-    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'voice' and tempo == 'fast' and ance == 'not_dance':
+    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'voice' and tempo == 'fast' and dance == 'not_dance':
         df1 = pd.read_csv('songDataCSVs/PopAggDarVoiFasNot.csv')
         list1 = np.transpose(df1.values.tolist())
        
-    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'voice' and tempo == 'slow' and ance == 'dance':
+    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'voice' and tempo == 'slow' and dance == 'dance':
         df1 = pd.read_csv('songDataCSVs/PopAggDarVoiSloDan.csv')
         list1 = np.transpose(df1.values.tolist())
        
-    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'voice' and tempo == 'slow' and ance == 'not_dance':
+    if genre == 'pop' and mood == 'aggressive' and timbre == 'dark' and instrument == 'voice' and tempo == 'slow' and dance == 'not_dance':
         df1 = pd.read_csv('songDataCSVs/PopAggDarVoiSloNot.csv')
         list1 = np.transpose(df1.values.tolist())
        
@@ -750,6 +845,7 @@ def setStaticListHelper(genre=None, mood=None, timbre=None, instrument=None, tem
 
 def initQueue():
     global queue
+    queue.clear()
     queue.append(randomNext())
     queue.append(randomNext())
     queue.append(randomNext())
@@ -823,7 +919,7 @@ def getQueue():
 
 
 # initStaticLists()
-# setStaticList(['classical'], 'aggressive', 'bright', 'instrumental', 'fast', 'not_dance')
+# setStaticList(['classical'], 'all', 'bright', 'instrumVoice', 'fastSlow', 'not_dance')
 # print(getStaticList())
 # # print(randomNext())
 # initQueue()

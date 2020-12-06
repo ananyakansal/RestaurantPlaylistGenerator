@@ -45,9 +45,9 @@ def player():
         print(req)
         result = initPlaylist(req)
         if result == 'ok':
-            return json.dumps({'status':'OK', 'choices': req})
+            return json.dumps('Thank you! Your submission has been received!')
         else:
-            return json.dumps('bad selection')
+            return json.dumps('Your current selection is unavailable. Please make a new selection.')
         # return render_template('player.html', token=token, songTitle='something')
     else:
         if 'code' in request.args:
@@ -70,17 +70,21 @@ def initPlaylist(req):
     #newest_getPlaylist.setStaticList(['classical'], 'aggressive', 'bright', 'instrumental', 'fast', 'not_dance')
     try:
         newest_getPlaylist.setStaticList(form[0], form[1], form[2], form[3], form[4], form[5])
-        newest_getPlaylist.initQueue()
-        global currSong
-        global playerReady
-        global queueUpdate
-        currSong = newest_getPlaylist.playQueue(songSPL)
-        playerReady = True
-        queueUpdate = True
-        return('ok')
     except SelectionError as e:
         print(e)
         return(e)
+    newest_getPlaylist.initQueue()
+    global currSong
+    global playerReady
+    global queueUpdate
+    global playFlag
+    global progress
+    progress = 0
+    playFlag = False
+    currSong = newest_getPlaylist.playQueue(songSPL)
+    playerReady = True
+    queueUpdate = True
+    return('ok')
 
 def interpretForm(req):
     global useSPL
@@ -119,8 +123,10 @@ def startPlayback():
 def update():
     # queue = newest_getPlaylist.getQueue()
     global queueUpdate
-    # spl=runningSPL.SPL(1024)
-    spl=''
+    if useSPL:
+        spl=runningSPL.SPL(1024)
+    else:
+        spl=''
     if playerReady and queueUpdate:
         songInfo1 = spotifyPlayback2.getSongInfo(currSong)
         queue = newest_getPlaylist.getQueue()
@@ -150,11 +156,12 @@ def checkSPL():
 def runSPL():
     global queueUpdate
     global songSPL
-    spl=runningSPL.SPL(1024)
-    songSPL.append(spl)
-    # print(len(songSPL))
-    if queueUpdate:
-        songSPL = []
+    if useSPL:
+        spl=runningSPL.SPL(1024)
+        songSPL.append(spl)
+        # print(len(songSPL))
+        if queueUpdate:
+            songSPL = []
 
 def playcheck():
     global progress
@@ -176,6 +183,6 @@ if __name__ == "__main__":
     # a = threading.Thread(target=runSPL)
     # a.start()
     # app.config['TEMPLATES_AUTO_RELOAD'] = True
-    a = threading.Thread(app.run(debug=True, threaded=True, port=5000))
+    a = threading.Thread(app.run(debug=True, threaded=False, port=5000))
     p.join()
     t.join()
