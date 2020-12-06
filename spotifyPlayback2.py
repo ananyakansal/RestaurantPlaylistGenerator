@@ -32,11 +32,11 @@ def initPlayer():
     global firstPlay
     firstPlay = True
 
-def startPlayback(uri):
+def startPlayback(uri, reinit=False):
     global firstPlay
     #get current play state
     progress = getProgress()
-    if progress is 'NoneType' or firstPlay is True:
+    if progress is 'NoneType' or firstPlay is True or reinit is True:
         progress = 0
         firstPlay = False
     #play at progress point
@@ -57,9 +57,7 @@ def getSongInfo(uri):
     id = uri.split(':')[2]
     response = requests.get(SPOTIFY_URL_TRACK+id, headers=header)
     resp = response.json()
-    # print(resp)
     art = resp['album']['images'][0]['url']
-    print(resp['album']['images'])
     duration = resp['duration_ms']
     title = resp['name']
     return [title, duration, art]

@@ -7,6 +7,7 @@ import runningSPL
 import json
 import time
 import threading
+import sys
 from multiprocessing import Process, Value
 
 app = Flask(__name__)
@@ -18,7 +19,8 @@ global progress
 global playerSet
 playerSet = False
 progress = 1
-global event
+global firstPlay
+firstPlay = True
 global token
 global queueUpdate
 global songSPL
@@ -69,7 +71,6 @@ def initPlayer():
         playerSet = True
     return 'nothing'
 
-# @app.route("/initPlaylist", methods= ['POST', 'GET'])
 def initPlaylist(req):
     global queueUpdate
     global currSong
@@ -87,7 +88,9 @@ def initPlaylist(req):
     global playerReady
     global playFlag
     global progress
-    progress = 0
+    global firstPlay
+    progress = 0  
+    firstPlay = True
     playFlag = False
     currSong = newest_getPlaylist.playQueue(songSPL)
     playerReady = True
@@ -115,12 +118,18 @@ def startPlayback():
     global currSong
     global queueUpdate
     global currArt
+    global firstPlay
     playFlag = True
-    if (progress == 0):
+    if (progress == 0 and not firstPlay):
         currSong = newest_getPlaylist.playQueue(useSPL, songSPL)
         spotifyPlayback2.startPlayback(currSong)
         queueUpdate = True
-    spotifyPlayback2.startPlayback(currSong)
+    elif (firstPlay):
+        spotifyPlayback2.startPlayback(currSong, firstPlay)
+        firstPlay = False
+    else:
+        spotifyPlayback2.startPlayback(currSong)
+    firstPlay = False
     return jsonify(art=currArt)
     # return songInfo[0]
 
@@ -155,13 +164,21 @@ def pausePlayback():
     spotifyPlayback2.pausePlayback()
     return 'nothing'
 
+# @app.route("/shutdown")
+# def shutdown():
+#     print('exit')
+#     run_event.clear()
+#     p.join()
+#     t.join()
+#     exit(0)
+
 def checkPlaystate():
-    while True:
+    while run_event.is_set():
         playcheck()
         time.sleep(4)
 
 def checkSPL():
-    while True:
+    while run_event.is_set():
         runSPL()
 
 def runSPL():
@@ -185,12 +202,13 @@ def playcheck():
             startPlayback()
 
 if __name__ == "__main__":
+    run_event = threading.Event()
+    run_event.set()
+    
     p = threading.Thread(target=checkPlaystate)
     p.daemon = True
     p.start()
     t = threading.Thread(target=checkSPL)
     t.daemon = True
     t.start()
-    a = threading.Thread(app.run(debug=True, threaded=False, port=5000))
-    p.join()
-    t.join()
+    app.run(debug=True, threaded=False, port=5000)
