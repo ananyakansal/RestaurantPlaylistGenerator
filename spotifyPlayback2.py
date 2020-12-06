@@ -59,6 +59,7 @@ def getSongInfo(uri):
     resp = response.json()
     # print(resp)
     art = resp['album']['images'][0]['url']
+    print(resp['album']['images'])
     duration = resp['duration_ms']
     title = resp['name']
     return [title, duration, art]

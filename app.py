@@ -23,6 +23,8 @@ global token
 global queueUpdate
 global songSPL
 global useSPL
+global currArt
+currArt = ''
 useSPL = False
 songSPL = []
 queueUpdate = True
@@ -42,7 +44,7 @@ def player():
     # token = {'userToken': userToken[0]}
     if request.method == "POST":
         req = request.form
-        print(req)
+        # print(req)
         try:
             result = initPlaylist(req)
         except:
@@ -76,7 +78,7 @@ def initPlaylist(req):
     try:
         newest_getPlaylist.setStaticList(form[0], form[1], form[2], form[3], form[4], form[5])
     except SelectionError as e:
-        print(e)
+        # print(e)
         newest_getPlaylist.clearQueue()
         queueUpdate = True
         currSong = ''
@@ -85,7 +87,7 @@ def initPlaylist(req):
     global playerReady
     global playFlag
     global progress
-    progress = 1
+    progress = 0
     playFlag = False
     currSong = newest_getPlaylist.playQueue(songSPL)
     playerReady = True
@@ -105,9 +107,6 @@ def interpretForm(req):
     else:
         useSPL = False
     form = [genre, mood, timbre, instrument, tempo, dance]
-    print(form)
-    print(type(form[1]))
-    print(type('aggressive'))
     return form
 
 @app.route("/startPlayback", methods= ['GET', 'POST'])
@@ -115,20 +114,21 @@ def startPlayback():
     global playFlag
     global currSong
     global queueUpdate
+    global currArt
     playFlag = True
     if (progress == 0):
         currSong = newest_getPlaylist.playQueue(useSPL, songSPL)
         spotifyPlayback2.startPlayback(currSong)
         queueUpdate = True
     spotifyPlayback2.startPlayback(currSong)
-    # if request.method == "POST":
-    return 'nothing'
+    return jsonify(art=currArt)
     # return songInfo[0]
 
 @app.route("/updateElements")
 def update():
     # queue = newest_getPlaylist.getQueue()
     global queueUpdate
+    global currArt
     if useSPL:
         spl='Room Noise: ' + str(runningSPL.SPL(1024))
     else:
@@ -139,12 +139,13 @@ def update():
         except IndexError:
             return jsonify(song1='', song2='', song3='', song4='', spl=spl)
         songInfo1 = spotifyPlayback2.getSongInfo(currSong)
+        currArt = songInfo1[2]
         songInfo2 = spotifyPlayback2.getSongInfo(queue[0])
         # songInfo3 = spotifyPlayback2.getSongInfo(queue[1])
         # songInfo4 = spotifyPlayback2.getSongInfo(queue[2])
         queueUpdate = False
         # return jsonify(song1=songInfo1[0], song2=songInfo2[0], song3=songInfo3[0], song4=songInfo4[0], spl=spl)
-        return jsonify(song1=songInfo1[0], song2=songInfo2[0], song3='', song4='', spl=spl)
+        return jsonify(song1=songInfo1[0], art=songInfo1[2], song2=songInfo2[0], song3='', song4='', spl=spl)
     return jsonify(spl=spl)
 
 @app.route("/pausePlayback", methods= ['GET', 'POST'])
