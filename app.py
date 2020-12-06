@@ -1,8 +1,8 @@
 from flask import Flask, render_template, redirect, request, url_for, jsonify
 import spotifyAuthentication
 import spotifyPlayback2
-import getPlaylist
-import new_getPlaylist
+import newest_getPlaylist
+from newest_getPlaylist import SelectionError
 import runningSPL
 import json
 import time
@@ -43,8 +43,11 @@ def player():
     if request.method == "POST":
         req = request.form
         print(req)
-        initPlaylist(req)
-        return json.dumps({'status':'OK', 'choices': req})
+        result = initPlaylist(req)
+        if result == 'ok':
+            return json.dumps({'status':'OK', 'choices': req})
+        else:
+            return json.dumps('bad selection')
         # return render_template('player.html', token=token, songTitle='something')
     else:
         if 'code' in request.args:
@@ -64,15 +67,20 @@ def initPlayer():
 # @app.route("/initPlaylist", methods= ['POST', 'GET'])
 def initPlaylist(req):
     form = interpretForm(req)
-    getPlaylist.setStaticList('classical', 'cheerful', 'bright', 'instrumental', 'fast', 'not_dance')
-    getPlaylist.initQueue()
-    global currSong
-    global playerReady
-    global queueUpdate
-    currSong = getPlaylist.playQueue(songSPL)
-    playerReady = True
-    queueUpdate = True
-    return 'nothing'
+    #newest_getPlaylist.setStaticList(['classical'], 'aggressive', 'bright', 'instrumental', 'fast', 'not_dance')
+    try:
+        newest_getPlaylist.setStaticList(form[0], form[1], form[2], form[3], form[4], form[5])
+        newest_getPlaylist.initQueue()
+        global currSong
+        global playerReady
+        global queueUpdate
+        currSong = newest_getPlaylist.playQueue(songSPL)
+        playerReady = True
+        queueUpdate = True
+        return('ok')
+    except SelectionError as e:
+        print(e)
+        return(e)
 
 def interpretForm(req):
     global useSPL
@@ -87,6 +95,9 @@ def interpretForm(req):
     else:
         useSPL = False
     form = [genre, mood, timbre, instrument, tempo, dance]
+    print(form)
+    print(type(form[1]))
+    print(type('aggressive'))
     return form
 
 @app.route("/startPlayback", methods= ['GET', 'POST'])
@@ -96,7 +107,7 @@ def startPlayback():
     global queueUpdate
     playFlag = True
     if (progress == 0):
-        currSong = getPlaylist.playQueue(songSPL)
+        currSong = newest_getPlaylist.playQueue(useSPL, songSPL)
         spotifyPlayback2.startPlayback(currSong)
         queueUpdate = True
     spotifyPlayback2.startPlayback(currSong)
@@ -106,13 +117,13 @@ def startPlayback():
 
 @app.route("/updateElements")
 def update():
-    # queue = getPlaylist.getQueue()
+    # queue = newest_getPlaylist.getQueue()
     global queueUpdate
     # spl=runningSPL.SPL(1024)
     spl=''
     if playerReady and queueUpdate:
         songInfo1 = spotifyPlayback2.getSongInfo(currSong)
-        queue = getPlaylist.getQueue()
+        queue = newest_getPlaylist.getQueue()
         songInfo2 = spotifyPlayback2.getSongInfo(queue[0])
         songInfo3 = spotifyPlayback2.getSongInfo(queue[1])
         songInfo4 = spotifyPlayback2.getSongInfo(queue[2])
