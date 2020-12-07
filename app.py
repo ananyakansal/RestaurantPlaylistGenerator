@@ -26,6 +26,8 @@ global useSPL
 global useSimilarity
 global currArt
 global duration
+global micIsSet
+micIsSet = False
 duration = ''
 currArt = ''
 useSPL = False
@@ -144,7 +146,7 @@ def update():
         dur = str(int(duration/60000)) + ":" + str(int(duration/1000)%60)
         prog = str(int(progress/60000)) + ":" + str(int(progress/1000)%60)
     if useSPL:
-        spl='Room Noise: ' + str(runningSPL.SPL(1024))
+        spl='Room Noise: ' + str(runningSPL.SPL())
     else:
         spl=''
     if playerReady and queueUpdate:
@@ -185,14 +187,29 @@ def checkSPL():
         with app.app_context():
             runSPL()
 
+# def runSPL():
+#     global queueUpdate
+#     global songSPL
+#     if useSPL:
+#         spl=runningSPL.SPL(1024)
+#         songSPL.append(spl)
+#         if queueUpdate:
+#             songSPL = []
+
 def runSPL():
     global queueUpdate
     global songSPL
+    global micIsSet
     if useSPL:
-        spl=runningSPL.SPL(1024)
+        if not micIsSet:
+            micIsSet = runningSPL.openMic()
+        spl=runningSPL.SPL()
         songSPL.append(spl)
         if queueUpdate:
             songSPL = []
+    if not useSPL:
+        if micIsSet:
+            micIsSet = runningSPL.closeMic()
 
 def playcheck():
     global progress

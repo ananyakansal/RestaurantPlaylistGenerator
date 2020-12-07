@@ -3,13 +3,18 @@ import wave
 import numpy
 import math
 
+global p
+global stream
+CHUNK = 1024
+FORMAT = pyaudio.paInt16
+CHANNELS = 1
+RATE = 44100
+RECORD_SECONDS = 1
+
 # print('Measuring...')
-def SPL(chunk):
-    CHUNK = chunk
-    FORMAT = pyaudio.paInt16
-    CHANNELS = 1
-    RATE = 44100
-    RECORD_SECONDS = 1
+def openMic():
+    global p
+    global stream
 
     p = pyaudio.PyAudio()
 
@@ -18,7 +23,12 @@ def SPL(chunk):
                     rate=RATE,
                     input=True,
                     frames_per_buffer=CHUNK)
+    return True
 
+
+def SPL():
+    global p
+    global stream
     amps = []
 
     for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
@@ -32,10 +42,13 @@ def SPL(chunk):
         i = i + 1
     ave = sum(amps)/(RATE / CHUNK * RECORD_SECONDS)
 
+    return ave
+
+def closeMic():
     stream.stop_stream()
     stream.close()
     p.terminate()
-    return ave
+    return False
 
 # dbs = []
 # while True:
