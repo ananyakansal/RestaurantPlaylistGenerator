@@ -13,7 +13,7 @@ The user can change their preferences at any time to generate a new playlist.
 
 The songs are played via the Spotify Web API and Spotify Player SDK. At the app's launch, the user is prompted to login to their Spotify account. As each song is played, a new song is added to the queue by the methods described above.
 
-- link to paper
+For more information, read our project paper, project3_finalPaper.pdf.
 - embed video
 
 ## How to run it
@@ -42,7 +42,6 @@ Clone the repository and move it to your desired folder. Navigate to the folder 
 
 To run the application, run the following python command: $ python3 app.py 
 This will prompt a response in terminal that looks like:
-[insert screenshot]
 
 The application currently serves at http://127.0.0.1:5000/. After running the python command, open the url in Google Chrome. You should see the application homescreen.
 
@@ -64,5 +63,10 @@ To make a new selection, pause the current playback and resubmit the form.
 To close the app, close the browser window and terminate the program in Terminal/Console with ^C
 
 ### Troubleshooting
+To use SPL, make sure that your system is set to use an active, working microphone. Then, make sure that terminal/console has access to your microphone.
 
+There are known issues in downloading pyAudio. Here are resources for help with download issues: https://stackoverflow.com/questions/33851379/pyaudio-installation-on-mac-python-3
+https://stackoverflow.com/questions/52283840/i-cant-install-pyaudio-on-windows-how-to-solve-error-microsoft-visual-c-14
+
+There are known issues using Flask for long running applications. The program may unexpectedly terminate. If this occurs, close the web broswer, and relaunch the application.
 
