@@ -34,12 +34,6 @@ queueUpdate = True
 
 @app.route("/", methods= ['GET', 'POST'])
 def index():
-    p = threading.Thread(target=checkPlaystate)
-    p.daemon = True
-    p.start()
-    t = threading.Thread(target=checkSPL)
-    t.daemon = True
-    t.start()
     return render_template('about.html', title="Home")
 
 @app.route("/callback/")
@@ -181,7 +175,7 @@ def checkPlaystate():
     while True:
         with app.app_context():
             playcheck()
-            time.sleep(1)
+            time.sleep(2)
 
 def checkSPL():
     # while run_event.is_set():
@@ -207,10 +201,19 @@ def playcheck():
         if progress == 0:
             startPlayback()
 
+@app.before_first_request
+def startThreads():
+    p = threading.Thread(target=checkPlaystate)
+    p.daemon = True
+    p.start()
+    t = threading.Thread(target=checkSPL)
+    t.daemon = True
+    t.start()
+    print('threads')
+
 if __name__ == "__main__":
     # run_event = threading.Event()
     # run_event.set()
-    app.run(debug=True, threaded=False, port=5000)
 
     # p = threading.Thread(target=checkPlaystate)
     # p.daemon = True
@@ -218,3 +221,6 @@ if __name__ == "__main__":
     # t = threading.Thread(target=checkSPL)
     # t.daemon = True
     # t.start()
+    a = threading.Thread(app.run(debug=True, threaded=False, port=5000))
+    # p.join()
+    # t.join()
