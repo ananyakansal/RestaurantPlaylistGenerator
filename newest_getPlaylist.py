@@ -5,10 +5,7 @@ from random import randint
 import math
 import random
 import sklearn.metrics
-# sklearn.metrics.pairwise.cosine_similarity
-# from sklearn.model_selection import train_test_split
 from collections import deque
-from operator import itemgetter
 
 global queue
 queue = deque()

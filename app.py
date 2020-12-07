@@ -7,7 +7,6 @@ import runningSPL
 import json
 import time
 import threading
-import sys
 
 app = Flask(__name__)
 
