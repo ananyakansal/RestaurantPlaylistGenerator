@@ -49,7 +49,7 @@ def player():
         except:
             return json.dumps('Please fill out the entire form.')
         if result == 'ok':
-            return json.dumps('Thank you! Your submission has been received! Wait for the album artwork to load, then click on the artwork to start listening!')
+            return json.dumps('Thank you! Your submission has been received! Wait for the queue to load, then click on the play button to start listening!')
         else:
             return json.dumps('Your current selection is unavailable. Please make a new selection.')
     else:
@@ -152,6 +152,7 @@ def update():
             queue = newest_getPlaylist.getQueue()
         except IndexError:
             return jsonify(song1='', song2='', song3='', song4='', spl=spl, duration='', progress='')
+            # return jsonify(song1='', song2='', song3='', song4='', spl=spl)
         songInfo1 = spotifyPlayback2.getSongInfo(currSong)
         currArt = songInfo1[2]
         duration = songInfo1[1]
@@ -159,9 +160,10 @@ def update():
         # songInfo3 = spotifyPlayback2.getSongInfo(queue[1])
         # songInfo4 = spotifyPlayback2.getSongInfo(queue[2])
         queueUpdate = False
-        # return jsonify(song1=songInfo1[0], song2=songInfo2[0], song3=songInfo3[0], song4=songInfo4[0], spl=spl)
-        return jsonify(song1=songInfo1[0], art=songInfo1[2], song2=songInfo2[0], song3='', song4='', spl=spl, duration=dur, progress=prog)
+        return jsonify(song1=songInfo1[0], song2=songInfo2[0], song3='', song4='', spl=spl, duration=dur, progress=prog)
+    #     return jsonify(song1=songInfo1[0], art=songInfo1[2], song2=songInfo2[0], song3='', song4='', spl=spl, duration=dur, progress=prog)
     return jsonify(spl=spl, duration=dur, progress=prog)
+    # return jsonify(spl=spl)
 
 @app.route("/pausePlayback", methods= ['GET', 'POST'])
 def pausePlayback():
@@ -203,18 +205,17 @@ def playcheck():
 
 @app.before_first_request
 def startThreads():
-    p = threading.Thread(target=checkPlaystate)
-    p.daemon = True
-    p.start()
+    c = threading.Thread(target=checkPlaystate)
+    c.daemon = False
+    c.start()
     t = threading.Thread(target=checkSPL)
-    t.daemon = True
+    t.daemon = False
     t.start()
     print('threads')
 
 if __name__ == "__main__":
     # run_event = threading.Event()
     # run_event.set()
-
     # p = threading.Thread(target=checkPlaystate)
     # p.daemon = True
     # p.start()

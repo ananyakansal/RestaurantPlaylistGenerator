@@ -217,15 +217,15 @@ function my_function() {
       });
     };
 
-$(function() {
-    $('#player').bind('click', function() {
-      $.getJSON('/playPause',
-          function() {
-        //do nothing
-      });
-  return false;
-});
-});
+// $(function() {
+//     $('#player').bind('click', function() {
+//       $.getJSON('/playPause',
+//           function() {
+//         //do nothing
+//       });
+//   return false;
+// });
+// });
 $(function() {
     $('a#addQueue').bind('click', function() {
       $.getJSON('/addQueue',
