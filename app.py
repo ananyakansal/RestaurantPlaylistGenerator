@@ -41,12 +41,8 @@ def callback():
 
 @app.route("/player/", methods= ['GET', 'POST'])
 def player():
-    # global token
-    # userToken = spotifyAuthentication.getUserToken(request.args['code'])
-    # token = {'userToken': userToken[0]}
     if request.method == "POST":
         req = request.form
-        # print(req)
         try:
             result = initPlaylist(req)
         except:
@@ -55,7 +51,6 @@ def player():
             return json.dumps('Thank you! Your submission has been received! Wait for the album artwork to load, then click on the artwork to start listening!')
         else:
             return json.dumps('Your current selection is unavailable. Please make a new selection.')
-        # return render_template('player.html', token=token, songTitle='something')
     else:
         if 'code' in request.args:
             global token
@@ -75,11 +70,9 @@ def initPlaylist(req):
     global queueUpdate
     global currSong
     form = interpretForm(req)
-    #newest_getPlaylist.setStaticList(['classical'], 'aggressive', 'bright', 'instrumental', 'fast', 'not_dance')
     try:
         newest_getPlaylist.setStaticList(form[0], form[1], form[2], form[3], form[4], form[5])
     except SelectionError as e:
-        # print(e)
         newest_getPlaylist.clearQueue()
         queueUpdate = True
         currSong = ''
@@ -136,11 +129,9 @@ def startPlayback():
         spotifyPlayback2.startPlayback(currSong)
     firstPlay = False
     return jsonify(art=currArt)
-    # return songInfo[0]
 
 @app.route("/updateElements")
 def update():
-    # queue = newest_getPlaylist.getQueue()
     global queueUpdate
     global currArt
     if useSPL:
@@ -169,13 +160,6 @@ def pausePlayback():
     spotifyPlayback2.pausePlayback()
     return 'nothing'
 
-# @app.route("/shutdown")
-# def shutdown():
-#     print('exit')
-#     run_event.clear()
-#     p.join()
-#     t.join()
-#     exit(0)
 
 def checkPlaystate():
     while run_event.is_set():
@@ -192,14 +176,12 @@ def runSPL():
     if useSPL:
         spl=runningSPL.SPL(1024)
         songSPL.append(spl)
-        # print(len(songSPL))
         if queueUpdate:
             songSPL = []
 
 def playcheck():
     global progress
     if playerReady and playFlag:
-        # while not event.is_set():
         progress = spotifyPlayback2.getProgress()
         if progress == 'NoneType':
             progress = 0
