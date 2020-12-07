@@ -7,7 +7,7 @@ The dynamic playlist generator is a web application that creates a music playlis
 The app relies on user input, the Spotify Web API, and a library of songs with associated metadata.
 Users define a list of parameters that map directly to categories within the available metadata such as genre, mood, timbre, instrumental vs vocal, tempo, and danceability. The library of songs used is found at https://multimediaeval.github.io/2018-AcousticBrainz-Genre-Task/, and the AcousticBrainz API (https://acousticbrainz.org) was used to extract the metadata from the library. 
 
-A subset of the total library is created based on the user's preferences. The user has an option to allow the application access to their microphone. If access is granted, songs are queued to the player based on the average sound pressure level. The sound pressure level is mapped to the tempo of the songs in the library subset. When the sound pressure level increases, faster songs are queued, and when the sound pressure level decreases, slower songs are queued. If microphone access is denied, songs are chosen randomly from the library subset. 
+A subset of the total library is created based on the user's preferences. The user has an option to allow the application access to their microphone. If access is granted, songs are queued to the player based on the average sound pressure level. The sound pressure level is mapped to the tempo of the songs in the library subset. When the sound pressure level increases, faster songs are queued, and when the sound pressure level decreases, slower songs are queued. If microphone access is denied, songs are either chosen randomly from the library subset, or chosen based on similarity to the previously played song. 
 
 The user can change their preferences at any time to generate a new playlist.
 
@@ -15,7 +15,7 @@ The songs are played via the Spotify Web API and Spotify Player SDK. At the app'
 
 For more information, read our project paper, project3_finalPaper.pdf.
 
-Here is a one-minute video demo of our project: https://youtu.be/V95Ta-NawGo Check it out!
+Here is a video demo of our project: https://www.youtube.com/watch?v=dEd0K4MuFXY Check it out!
 
 ## How to run it
 
