@@ -5,7 +5,7 @@ The dynamic playlist generator is a web application that creates a music playlis
 
 ## How does it work?
 The app relies on user input, the Spotify Web API, and a library of songs with associated metadata.
-Users define a list of parameters that map directly to categories within the available metadata such as genre, mood, timbre, instrumental vs vocal, tempo, and danceability. The library of songs used is found at [insert link], and AcousticBrainz was used to extract the metadata from the library. 
+Users define a list of parameters that map directly to categories within the available metadata such as genre, mood, timbre, instrumental vs vocal, tempo, and danceability. The library of songs used is found at https://zenodo.org/record/2553414#.X81bEy2ZNQI, and the AcousticBrainz API (https://acousticbrainz.org) was used to extract the metadata from the library. 
 
 A subset of the total library is created based on the user's preferences. The user has an option to allow the application access to their microphone. If access is granted, songs are queued to the player based on the average sound pressure level. The sound pressure level is mapped to the tempo of the songs in the library subset. When the sound pressure level increases, faster songs are queued, and when the sound pressure level decreases, slower songs are queued. If microphone access is denied, songs are chosen randomly from the library subset. 
 
@@ -20,13 +20,20 @@ The songs are played via the Spotify Web API and Spotify Player SDK. At the app'
 
 ### Package Requirements/Dependencies
 The application utilizes the following packages:
-- Python3 [insert link]
-  - json
-  - requests
-  - pandas
-  - numpy
-- Flask [insert link]
-- Pyaudio [insert link]
+- Python3 (https://www.python.org/downloads/)
+  - Native packages
+    - Json
+    - threading
+    - time
+    - math
+    - random
+  - External packages
+    - requests (https://pypi.org/project/requests/)
+    - pandas (https://pandas.pydata.org/pandas-docs/stable/getting_started/install.html)
+    - numpy (https://numpy.org/install/)
+    - sklearn (https://scikit-learn.org/stable/install.html)
+- Flask (https://flask.palletsprojects.com/en/1.1.x/installation/)
+- Pyaudio (https://people.csail.mit.edu/hubert/pyaudio/)
 
 ### Running the app
 The application should be run via terminal/console and launched in Google Chrome. 
@@ -49,7 +56,7 @@ If your  selection was invalid, you will see the message "Your current selection
 
 To play through the queue, click the album artwork. The next song will be played automatically at the conclusion of the previous song. To pause the queue, hit the album artwork again. 
 
-If you enabled microphone use, you can check the current sound pressure level with the "Room Noise" field (above the album artwork). 
+If you enabled microphone use, you can check the current sound pressure level with the "Room Noise" field (found above the album artwork). 
 
 To make a new selection, pause the current playback and resubmit the form.
 
