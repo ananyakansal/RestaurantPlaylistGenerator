@@ -14,7 +14,8 @@ The user can change their preferences at any time to generate a new playlist.
 The songs are played via the Spotify Web API and Spotify Player SDK. At the app's launch, the user is prompted to login to their Spotify account. As each song is played, a new song is added to the queue by the methods described above.
 
 For more information, read our project paper, project3_finalPaper.pdf.
-- embed video
+
+Here is a one-minute video demo of our project: https://youtu.be/V95Ta-NawGo Check it out!
 
 ## How to run it
 
