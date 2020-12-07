@@ -19,16 +19,17 @@
     <div class="w-container">
       <a href="{{ url_for('static', filename='profile.png')}}" class="brand w-nav-brand"></a>
       <nav role="navigation" class="w-nav-menu">
-        <a href="#" class="w-nav-link">Home</a>
-        <a href="{{ url_for('callback')}}" class="w-nav-link">Login</a>
+        <a href="#" class="w-nav-link"></a>
+        <a href=# id="shutdown" class="w-nav-link"></a>
       </nav>
       <div class="w-nav-button">
         <div class="w-icon-nav-menu"></div>
       </div>
     </div>
   </div>
+  <p href=# id=spl></p>
   <div class="columns w-row">
-    <div href="#" id="player" class="column w-col w-col-3" value="pause"><img src="{{ url_for('static', filename='Play.png') }}" loading="lazy" width="269" id="album-artwork" alt="" class="button">
+    <div href="#" id="player" class="column w-col w-col-3" value="pause"><img href=# src="{{ url_for('static', filename='Play.png') }}" loading="lazy" width="269" id="album-artwork" alt="" class="button">
       <h3 class="heading-2">Queue</h3>
       <ol id="queue" role="list" class="w-list-unstyled">
         <li href=# id="queue1" style="color:white;"></li>
@@ -43,16 +44,16 @@
           <h1 class="heading">Playlist Generator</h1><label for="name" id="restaurant-label" class="field-label">What Best Describes your Restaurant's mood?</label>
           <div class="w-row">
             <div class="w-col w-col-6"><label id="restaurant-choices" class="radio-button-field w-radio">
-                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre" id="Genre" name="Genre" value="aggressive" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-4" class="w-form-label">aggressive</span>
+                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre" id="Genre" name="Genre" value="aggressive" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-4" class="w-form-label">intense, aggressive, visceral</span>
               </label><label id="restaurant-choices" class="radio-button-field w-radio">
-                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 2" id="Genre-2" name="Genre" value="bittersweet" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre" class="w-form-label">bittersweet</span>
+                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 2" id="Genre-2" name="Genre" value="bittersweet" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre" class="w-form-label">bittersweet, poignant, brooding</span>
               </label><label id="restaurant-choices" class="radio-button-field w-radio">
-                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 3" id="Genre-3" name="Genre" value="cheerful" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-2" class="w-form-label">cheerful</span>
+                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 3" id="Genre-3" name="Genre" value="cheerful" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-2" class="w-form-label">cheerful, fun, good natured</span>
               </label><label id="restaurant-choices" class="radio-button-field w-radio">
-                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 4" id="Genre-4" name="Genre" value="humourous" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-3" class="w-form-label">humorous</span>
+                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 4" id="Genre-4" name="Genre" value="humorous" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-3" class="w-form-label">whimsical, humorous, witty</span>
               </label></div>
             <div class="w-col w-col-6"><label id="restaurant-choices" class="radio-button-field w-radio">
-                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 5" id="Genre-5" name="Genre" value="passionate" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-5" class="w-form-label">passionate</span>
+                <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 5" id="Genre-5" name="Genre" value="passionate" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-5" class="w-form-label">rousing, confident, boisterous</span>
               </label><label id="restaurant-choices" class="radio-button-field w-radio">
                 <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" data-name="Genre 6" id="Genre-6" name="Genre" value="all" required="" style="opacity:0;position:absolute;z-index:-1"><span for="Genre-6" class="w-form-label">a bit of everything</span>
               </label><label id="restaurant-choices" class="radio-button-field w-radio">
@@ -77,21 +78,26 @@
           <div class="w-row">
             <div class="w-col w-col-4"><label class="w-radio"><input type="radio" data-name="Radio 3" id="radio-3" name="radio" value="fast" class="w-form-formradioinput w-radio-input"><span class="radio-button-label-2 w-form-label">&lt; 1 hour</span></label></div>
             <div class="w-col w-col-4"><label class="w-radio"><input type="radio" data-name="Radio 3" id="radio-3" name="radio" value="slow" class="w-form-formradioinput w-radio-input"><span class="radio-button-label-2 w-form-label">&gt; 1 hour</span></label></div>
-            <div class="column-2 w-col w-col-4"><label class="w-radio"><input type="radio" data-name="Radio 3" id="radio-3" name="fastSlow" value="Radio" class="w-form-formradioinput w-radio-input"><span class="w-form-label">Varied</span></label></div>
-          </div><label for="name" id="restaurant-label" class="field-label">What kind of Music would you like?</label>
+            <div class="column-2 w-col w-col-4"><label class="w-radio"><input type="radio" data-name="Radio 3" id="radio-3" name="radio" value="fastSlow" class="w-form-formradioinput w-radio-input"><span class="w-form-label">Varied</span></label></div>
+          </div><label for="name" id="restaurant-label" class="field-label">Danceable?</label>
           <div class="w-row">
             <div class="w-col w-col-6"><label class="radio-button-field-4 w-radio"><input type="radio" data-name="danceability" id="radio-4" name="danceability" value= "not_dance" class="w-form-formradioinput w-radio-input"><span class="w-form-label">Cool, Calm, and Collected</span></label></div>
             <div class="w-col w-col-6"><label class="radio-button-field-4 w-radio"><input type="radio" data-name="danceability" id="radio-4" name="danceability" value="dance" class="w-form-formradioinput w-radio-input"><span class="w-form-label">Toe Tappin&#x27;</span></label></div>
-          </div><label for="name" id="restaurant-label" class="field-label">Would it be okay if we used your microphone to get volume information to update the playlist?<br>*No information or audio is recorded or stored</label>
+          </div><label for="name" id="restaurant-label" class="field-label">What describes your restauarant's atmosphere?</label>
           <div class="w-row">
-            <div class="w-col w-col-6"><label class="w-radio"><input type="radio" data-name="Radio 5" id="radio-5" name="radio-5" value="spl" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label">Yes, make my playlist awesome!</span></label></div>
-            <div class="w-col w-col-6"><label class="w-radio"><input type="radio" data-name="Radio 5" id="radio-5" name="radio-5" value="random" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label">No, randomize it!</span></label></div>
-          <input href="#" type="submit" value="Submit" data-wait="Please wait..." id="submit-queue" class="submit-button w-button">
+            <div class="w-col w-col-6"><label class="w-radio"><input type="radio" data-name="Radio 5" id="radio-5" name="radio-5" value="bright" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label">Bright</span></label></div>
+            <div class="w-col w-col-6"><label class="w-radio"><input type="radio" data-name="Radio 5" id="radio-5" name="radio-5" value="dark" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label">Dark</span></label></div>
+          </div><label for="name" id="restaurant-label" class="field-label">Would it be okay if we used your microphone to get volume information to update the playlist?<br>*No information or audio is recorded or stored</label> 
+            <div class="w-row">
+              <div class="w-col w-col-6"><label class="w-radio"><input type="radio" data-name="Radio 6" id="radio-5" name="radio-6" value="spl" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label">Yes, make my playlist awesome!</span></label></div>
+              <div class="w-col w-col-6"><label class="w-radio"><input type="radio" data-name="Radio 6" id="radio-5" name="radio-6" value="random" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label">No, randomize it!</span></label></div> 
+              <div class="w-col w-col-6"><label class="w-radio"><input type="radio" data-name="Radio 6" id="radio-5" name="radio-6" value="similarity" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label">No, play similar songs!</span></label></div>   
+            </div><input href="#" type="submit" value="Submit" data-wait="Please wait..." id="submit-queue" class="submit-button w-button">
         </form>
         <div class="w-form-done">
           <div>Thank you! Your submission has been received!</div>
         </div>
-        <div class="w-form-fail">
+        <div class="w-form-fail" href=# id=submission>
           <div>Oops! Something went wrong while submitting the form.</div>
         </div>
       </div>
@@ -140,16 +146,6 @@
 
 <script type=text/javascript>
 
-//   $(function() {
-//     $('#submit-queue').bind('click', function() {
-//       $.getJSON('/initPlaylist',
-//           function() {
-//         //do nothing
-//       });
-//   return false;
-// });
-// });
-
 $(function(){
 	$('#submit-queue').click(function(){
 		$.ajax({
@@ -157,46 +153,18 @@ $(function(){
 			data: $('#survey-form').serialize(),
 			type: 'POST',
 			success: function(response){
-				console.log(response);
+        console.log(response);
+        $("#submission").text(response);
+        
 			},
 			error: function(error){
-				console.log(error);
+        console.log(error);
+        $("#submission").text(response);
 			}
 		});
-    // $.getJSON('/initPlaylist',
-    //       function() {
-    //     //do nothing
-    //       });
 	});
 });
 
-// $(function() {
-//   $(document).ready(function(){
-//       $.getJSON('/initPlayer',
-//           function() {
-//         //do nothing
-//       });
-//   return false;
-// });
-// });
-
-// $(function() {
-//     $('#submit-queue').click(function(event)) {
-//       var form = $('#survey-form');
-//       var form_id = 'survey-form';
-//       var url = form.prop('action');
-//       var type = form.prop('method');
-//       var formData = getContactFormData(form_id);
-
-//       send_form(form, form_id, url, type, modular_ajax, formData)
-// });
-
-// function getFormData(form) {
-//     // creates a FormData object and adds chips text
-//     var formData = new FormData(document.getElementById(form));
-// //    for (var [key, value] of formData.entries()) { console.log('formData', key, value);}
-//     return formData
-// }
 
 $(function() {
     $('#player').bind('click', function() {
@@ -207,17 +175,29 @@ $(function() {
         $.getJSON('/pausePlayback',
           function() {
       });
+      $("#album-artwork").attr('src', "{{ url_for('static', filename='Play.png') }}")
     }
     else if(state  === "pause")
     {
         $("#player").attr("value", "play");
         $.getJSON('/startPlayback',
-          function() {
+          function(data) {
+          $("#album-artwork").attr('src', data.art)
       });
     }
   return false;
 })
 });
+
+// $(function() {
+//     $('#shutdown').bind('click', function() {
+//       $.getJSON('/shutdown',
+//           function() {
+//         //do nothing
+//       });
+//   return false;
+// });
+// });
 
 setInterval("my_function();",4000); 
 function my_function() {
@@ -229,6 +209,7 @@ function my_function() {
           $("#queue3").text(data.song3);
           $("#queue4").text(data.song4);
           $("#spl").text(data.spl)
+          $("#album-artwork").attr('src', data.art)
         });
         return false;
       });

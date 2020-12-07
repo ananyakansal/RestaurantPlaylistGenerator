@@ -8,7 +8,6 @@ import json
 import time
 import threading
 import sys
-from multiprocessing import Process, Value
 
 app = Flask(__name__)
 
@@ -25,6 +24,7 @@ global token
 global queueUpdate
 global songSPL
 global useSPL
+global useSimilarity
 global currArt
 currArt = ''
 useSPL = False
@@ -52,7 +52,7 @@ def player():
         except:
             return json.dumps('Please fill out the entire form.')
         if result == 'ok':
-            return json.dumps('Thank you! Your submission has been received!')
+            return json.dumps('Thank you! Your submission has been received! Wait for the album artwork to load, then click on the artwork to start listening!')
         else:
             return json.dumps('Your current selection is unavailable. Please make a new selection.')
         # return render_template('player.html', token=token, songTitle='something')
@@ -92,13 +92,14 @@ def initPlaylist(req):
     progress = 0  
     firstPlay = True
     playFlag = False
-    currSong = newest_getPlaylist.playQueue(songSPL)
+    currSong = newest_getPlaylist.playQueue(songSPL, useSimilarity)
     playerReady = True
     queueUpdate = True
     return('ok')
 
 def interpretForm(req):
     global useSPL
+    global useSimilarity
     mood = req['Genre']
     genre = [k for k,v in req.items() if v == 'on']
     instrument = req['instrumental']
@@ -109,6 +110,10 @@ def interpretForm(req):
         useSPL = True
     else:
         useSPL = False
+    if (req['radio-6'] == 'similarity'):
+        useSimilarity = True
+    else:
+        useSimilarity = False
     form = [genre, mood, timbre, instrument, tempo, dance]
     return form
 
@@ -121,7 +126,7 @@ def startPlayback():
     global firstPlay
     playFlag = True
     if (progress == 0 and not firstPlay):
-        currSong = newest_getPlaylist.playQueue(useSPL, songSPL)
+        currSong = newest_getPlaylist.playQueue(useSPL, useSimilarity, songSPL)
         spotifyPlayback2.startPlayback(currSong)
         queueUpdate = True
     elif (firstPlay):

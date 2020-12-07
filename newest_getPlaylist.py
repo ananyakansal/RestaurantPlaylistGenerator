@@ -4,13 +4,20 @@ from random import seed
 from random import randint
 import math
 import random
+import sklearn.metrics
+# sklearn.metrics.pairwise.cosine_similarity
+# from sklearn.model_selection import train_test_split
 from collections import deque
 from operator import itemgetter
 
 global queue
 queue = deque()
 global staticList
+global similarity
+global staticListData
 staticList = []
+
+global previousPick
 
 class SelectionError(Exception):
     pass
@@ -104,9 +111,15 @@ def selectMultiple(genre=None, mood=None, timbre=None, instrument=None, tempo=No
 
                     staticList = staticList + setStaticListHelper(genre=genre, mood='passionate', timbre=timbre, instrument=instrument, tempo=tempo, dance=dance)
     
-def setStaticList(genre=None, mood=None, timbre=None, instrument=None, tempo=None, dance=None):
+def setStaticList(genre=None, mood=None, timbre=None, instrument=None, tempo=None, dance=None, useSimilarity=False):
     global staticList
+    global staticListData
+    global similarity
     staticList.clear()
+    if useSimilarity:
+        similarity = True
+    else:
+        similarity = False
     if tempo == 'fastSlow' or instrument == 'instrumVoice' or mood == 'all':
         selectMultiple(genre[0], mood, timbre, instrument, tempo, dance)
     else:   
@@ -119,13 +132,22 @@ def setStaticList(genre=None, mood=None, timbre=None, instrument=None, tempo=Non
             for i in range(1, len(genre)):
                 tempList = setStaticListHelper(genre[i], mood, timbre, instrument, tempo, dance)
                 staticList = staticList + tempList
-        staticList = sorted(staticList)
+        if not similarity:
+            staticList = sorted(staticList)
     else:
         if tempo == 'fastSlow' or instrument == 'instrumVoice' or mood == 'all':
-            staticList = sorted(staticList)
-    if not staticList:
+            if not similarity:
+                staticList = sorted(staticList)
+    if len(staticList) == 0:
         raise SelectionError("Please make a new selection")
-    a,staticList = map(list,zip(*staticList))
+    if similarity:
+        scaled_tempo = [float(x)/float(max(staticList[23]))for x in staticList[23]]
+        staticList[23]=scaled_tempo
+        newdata = [staticList[3],staticList[4],staticList[5],staticList[6],staticList[7],staticList[8],staticList[9],staticList[10],staticList[11],staticList[12],staticList[13],staticList[14],staticList[15],staticList[16],staticList[17],staticList[18],staticList[19],staticList[20],staticList[21],staticList[22],staticList[23]]
+        staticList = staticList[24]
+        staticListData = np.transpose(newdata)
+    else:
+        a,staticList = map(list,zip(*staticList))
 
 def setStaticListHelper(genre=None, mood=None, timbre=None, instrument=None, tempo=None, dance=None):
     list1=[]
@@ -835,6 +857,8 @@ def setStaticListHelper(genre=None, mood=None, timbre=None, instrument=None, tem
     # staticList = list1[24]
     if len(list1) == 0:
         return list1
+    if similarity:
+        return list1
     merged_list = list(zip(list1[23], list1[24]))
     return merged_list
 
@@ -846,10 +870,19 @@ def initQueue():
     # queue.append(randomNext())
     # print(queue)
 
-def playQueue(useSPL, spl=None):
+def initQueueSimilarity():
+    global queue
+    global previousPick
+    queue.clear()
+    previousPick = randint(0, len(staticList))
+    queue.append(similarNext())
+
+def playQueue(useSPL, useSimilarity, spl=None):
     global queue
     if (not useSPL):
         queue.append(randomNext())
+    elif useSimilarity:
+        queue.append(similarNext())
     elif splAvg(spl) == None:
         queue.append(randomNext())
     else:
@@ -864,6 +897,24 @@ def randomNext():
         ind = randint(0, len(staticList))
         song = staticList.pop(ind)
     return song
+
+def similarNext():
+    global previousPick
+    global staticListData
+    global staticList
+    newSong = getSimilarity(previousPick, staticListData)
+    song = staticList[newSong]
+    while ('Not Found' in song):
+        staticList = np.delete(staticList, previousPick, 0)
+        staticListData = np.delete(staticListData, newSong, 0)
+        newSong = getSimilarity(previousPick, staticListData)
+        song = staticList[newSong]
+    # staticList.pop(previousPick)
+    staticList = np.delete(staticList, previousPick, 0)
+    staticListData = np.delete(staticListData, previousPick, 0)
+    previousPick = newSong
+    return song
+
 
 def splNext(spl):
     ind = gaussian_pick(spl, staticList)
@@ -916,10 +967,16 @@ def getQueue():
     # temp.append(queue[2])
     return temp
 
+def getSimilarity(pickedindex,listForSim):
+    similarity = sklearn.metrics.pairwise.cosine_similarity(listForSim,Y=None,dense_output=True)
+    score = similarity[pickedindex]
+    rank = score.argsort()
+    return(rank[-2])
 
 # initStaticLists()
-# setStaticList(['classical'], 'all', 'bright', 'instrumVoice', 'fastSlow', 'not_dance')
-# print(getStaticList())
+# setStaticList(['classical'], 'aggressive', 'bright', 'instrumental', 'fast', 'not_dance', True)
+# initQueueSimilarity()
+# print(similarNext())
 # # print(randomNext())
 # initQueue()
 

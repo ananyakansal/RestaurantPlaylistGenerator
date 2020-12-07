@@ -757,8 +757,8 @@ def getQueue():
     return temp
 
 # initStaticLists()
-setStaticList('classical', 'aggressive', 'bright', 'instrumental', 'fast', 'not_dance')
-print(getStaticList())
+# setStaticList('classical', 'aggressive', 'bright', 'instrumental', 'fast', 'not_dance')
+# print(getStaticList())
 # # print(randomNext())
 # initQueue()
 
