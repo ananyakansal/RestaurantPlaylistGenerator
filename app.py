@@ -16,7 +16,7 @@ playerReady = False
 global progress
 global playerSet
 playerSet = False
-progress = 1
+progress = ''
 global firstPlay
 firstPlay = True
 global token
@@ -25,6 +25,8 @@ global songSPL
 global useSPL
 global useSimilarity
 global currArt
+global duration
+duration = ''
 currArt = ''
 useSPL = False
 songSPL = []
@@ -32,6 +34,12 @@ queueUpdate = True
 
 @app.route("/", methods= ['GET', 'POST'])
 def index():
+    p = threading.Thread(target=checkPlaystate)
+    p.daemon = True
+    p.start()
+    t = threading.Thread(target=checkSPL)
+    t.daemon = True
+    t.start()
     return render_template('about.html', title="Home")
 
 @app.route("/callback/")
@@ -115,9 +123,10 @@ def startPlayback():
     global currSong
     global queueUpdate
     global currArt
+    global duration
     global firstPlay
     playFlag = True
-    if (progress == 0 and not firstPlay):
+    if (progress < 1 and not firstPlay):
         currSong = newest_getPlaylist.playQueue(useSPL, useSimilarity, songSPL)
         spotifyPlayback2.startPlayback(currSong)
         queueUpdate = True
@@ -126,13 +135,20 @@ def startPlayback():
         firstPlay = False
     else:
         spotifyPlayback2.startPlayback(currSong)
-    firstPlay = False
     return jsonify(art=currArt)
 
 @app.route("/updateElements")
 def update():
     global queueUpdate
     global currArt
+    global duration
+    global progress
+    if progress == '' or duration == '':
+        dur = duration
+        prog = progress
+    else:
+        dur = str(int(duration/60000)) + ":" + str(int(duration/1000)%60)
+        prog = str(int(progress/60000)) + ":" + str(int(progress/1000)%60)
     if useSPL:
         spl='Room Noise: ' + str(runningSPL.SPL(1024))
     else:
@@ -141,16 +157,17 @@ def update():
         try:
             queue = newest_getPlaylist.getQueue()
         except IndexError:
-            return jsonify(song1='', song2='', song3='', song4='', spl=spl)
+            return jsonify(song1='', song2='', song3='', song4='', spl=spl, duration='', progress='')
         songInfo1 = spotifyPlayback2.getSongInfo(currSong)
         currArt = songInfo1[2]
+        duration = songInfo1[1]
         songInfo2 = spotifyPlayback2.getSongInfo(queue[0])
         # songInfo3 = spotifyPlayback2.getSongInfo(queue[1])
         # songInfo4 = spotifyPlayback2.getSongInfo(queue[2])
         queueUpdate = False
         # return jsonify(song1=songInfo1[0], song2=songInfo2[0], song3=songInfo3[0], song4=songInfo4[0], spl=spl)
-        return jsonify(song1=songInfo1[0], art=songInfo1[2], song2=songInfo2[0], song3='', song4='', spl=spl)
-    return jsonify(spl=spl)
+        return jsonify(song1=songInfo1[0], art=songInfo1[2], song2=songInfo2[0], song3='', song4='', spl=spl, duration=dur, progress=prog)
+    return jsonify(spl=spl, duration=dur, progress=prog)
 
 @app.route("/pausePlayback", methods= ['GET', 'POST'])
 def pausePlayback():
@@ -159,15 +176,18 @@ def pausePlayback():
     spotifyPlayback2.pausePlayback()
     return 'nothing'
 
-
 def checkPlaystate():
-    while run_event.is_set():
-        playcheck()
-        time.sleep(4)
+    # while run_event.is_set():
+    while True:
+        with app.app_context():
+            playcheck()
+            time.sleep(1)
 
 def checkSPL():
-    while run_event.is_set():
-        runSPL()
+    # while run_event.is_set():
+    while True:
+        with app.app_context():
+            runSPL()
 
 def runSPL():
     global queueUpdate
@@ -188,13 +208,13 @@ def playcheck():
             startPlayback()
 
 if __name__ == "__main__":
-    run_event = threading.Event()
-    run_event.set()
-    
-    p = threading.Thread(target=checkPlaystate)
-    p.daemon = True
-    p.start()
-    t = threading.Thread(target=checkSPL)
-    t.daemon = True
-    t.start()
+    # run_event = threading.Event()
+    # run_event.set()
     app.run(debug=True, threaded=False, port=5000)
+
+    # p = threading.Thread(target=checkPlaystate)
+    # p.daemon = True
+    # p.start()
+    # t = threading.Thread(target=checkSPL)
+    # t.daemon = True
+    # t.start()

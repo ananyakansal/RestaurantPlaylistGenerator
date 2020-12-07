@@ -30,6 +30,7 @@
   <p href=# id=spl></p>
   <div class="columns w-row">
     <div href="#" id="player" class="column w-col w-col-3" value="pause"><img href=# src="{{ url_for('static', filename='Play.png') }}" loading="lazy" width="269" id="album-artwork" alt="" class="button">
+      <p href=# id=progress></p>
       <h3 class="heading-2">Queue</h3>
       <ol id="queue" role="list" class="w-list-unstyled">
         <li href=# id="queue1" style="color:white;"></li>
@@ -95,10 +96,10 @@
             </div><input href="#" type="submit" value="Submit" data-wait="Please wait..." id="submit-queue" class="submit-button w-button">
         </form>
         <div class="w-form-done">
-          <div>Thank you! Your submission has been received!</div>
+          <div></div>
         </div>
         <div class="w-form-fail" href=# id=submission>
-          <div>Oops! Something went wrong while submitting the form.</div>
+          <div></div>
         </div>
       </div>
     </div>
@@ -199,7 +200,7 @@ $(function() {
 // });
 // });
 
-setInterval("my_function();",4000); 
+setInterval("my_function();",1000); 
 function my_function() {
   $(function() {
         $.getJSON('/updateElements',
@@ -210,6 +211,7 @@ function my_function() {
           $("#queue4").text(data.song4);
           $("#spl").text(data.spl)
           $("#album-artwork").attr('src', data.art)
+          $("#progress").text(data.progress + ' / ' + data.duration + '')
         });
         return false;
       });
