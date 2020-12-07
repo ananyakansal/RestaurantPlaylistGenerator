@@ -5,7 +5,7 @@ The dynamic playlist generator is a web application that creates a music playlis
 
 ## How does it work?
 The app relies on user input, the Spotify Web API, and a library of songs with associated metadata.
-Users define a list of parameters that map directly to categories within the available metadata such as genre, mood, timbre, instrumental vs vocal, tempo, and danceability. The library of songs used is found at https://zenodo.org/record/2553414#.X81bEy2ZNQI, and the AcousticBrainz API (https://acousticbrainz.org) was used to extract the metadata from the library. 
+Users define a list of parameters that map directly to categories within the available metadata such as genre, mood, timbre, instrumental vs vocal, tempo, and danceability. The library of songs used is found at https://multimediaeval.github.io/2018-AcousticBrainz-Genre-Task/, and the AcousticBrainz API (https://acousticbrainz.org) was used to extract the metadata from the library. 
 
 A subset of the total library is created based on the user's preferences. The user has an option to allow the application access to their microphone. If access is granted, songs are queued to the player based on the average sound pressure level. The sound pressure level is mapped to the tempo of the songs in the library subset. When the sound pressure level increases, faster songs are queued, and when the sound pressure level decreases, slower songs are queued. If microphone access is denied, songs are chosen randomly from the library subset. 
 
